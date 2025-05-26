@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.Blend?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+
+<AnchorPane prefHeight="490.0" prefWidth="866.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.RegisterHotelController">
+   <children>
+      <Pane prefHeight="490.0" prefWidth="866.0" style="-fx-background-color: #bdbdbd;">
+         <children>
+            <Pane layoutX="263.0" layoutY="39.0" prefHeight="423.0" prefWidth="340.0" style="-fx-background-color: #ffffff;">
+               <children>
+                  <Text layoutX="109.0" layoutY="44.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Register Hotel">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Text>
+                  <TextField fx:id="hotelIdTextField" layoutX="29.0" layoutY="105.0" prefHeight="25.0" prefWidth="281.0" />
+                  <Text fill="#868686" layoutX="29.0" layoutY="101.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Hotel ID">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Text>
+                  <TextField fx:id="hotelNameTextField" layoutX="29.0" layoutY="165.0" prefHeight="25.0" prefWidth="281.0" />
+                  <Text fill="#868686" layoutX="29.0" layoutY="161.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Hotel Name">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Text>
+                  <TextField fx:id="addressTextField" layoutX="30.0" layoutY="225.0" prefHeight="67.0" prefWidth="281.0" />
+                  <Text fill="#868686" layoutX="30.0" layoutY="221.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Address">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Text>
+                  <TextField fx:id="roomsNumberOnAction" layoutX="29.0" layoutY="323.0" prefHeight="25.0" prefWidth="281.0" />
+                  <Text fill="#868686" layoutX="29.0" layoutY="319.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Number of rooms">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Text>
+                  <Button layoutX="173.0" layoutY="365.0" mnemonicParsing="false" onAction="#createHotelOnAction" prefHeight="25.0" prefWidth="138.0" text="Crear Hotel" />
+                  <Button layoutX="30.0" layoutY="365.0" mnemonicParsing="false" onAction="#cancelOnAction" prefHeight="25.0" prefWidth="138.0" text="Cancelar" />
+               </children>
+               <effect>
+                  <Blend />
+               </effect>
+            </Pane>
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>

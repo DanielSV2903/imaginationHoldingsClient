@@ -5,4 +5,6 @@ module com.imaginationholdingsclient {
 
     opens com.imaginationholdingsclient to javafx.fxml;
     exports com.imaginationholdingsclient;
+    exports controller;
+    opens controller to javafx.fxml;
 }
