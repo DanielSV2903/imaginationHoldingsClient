@@ -1,15 +1,18 @@
 package controller;
 
 import com.imaginationHoldings.domain.Guest;
+import com.imaginationHoldings.protocol.Protocol;
+import com.imaginationHoldings.protocol.Request;
+import com.imaginationHoldings.protocol.Response;
 import javafx.event.ActionEvent;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.Socket;
+import java.net.SocketException;
+import java.net.UnknownHostException;
 
 public class UserInfoController
 {
@@ -36,45 +39,52 @@ public class UserInfoController
         try {
             int id = Integer.parseInt(iDTextFIeld.getText());
             String name = nameTextField.getText();
-            String lastName =lastNameTextField.getText();
-            String birth="";
+            String lastName = lastNameTextField.getText();
+            String birth = "";
 
             if (birthDatePicker.getValue() != null)
-                birth=birthDatePicker.getValue().toString();
+                birth = birthDatePicker.getValue().toString();
             if (!birth.isEmpty())
-                birth=birthDatePicker.getEditor().getText();
-            String gender= genderChoiceBox.getSelectionModel().getSelectedItem().toString();
+                birth = birthDatePicker.getEditor().getText();
+            String gender = genderChoiceBox.getSelectionModel().getSelectedItem().toString();
 
-            Socket socket = new Socket("6.tcp.ngrok.io", 19800);
+            Socket socket = new Socket("localhost", 5000);
 
             // Establecer timeout para evitar bloqueos indefinidos
             socket.setSoTimeout(5000); // 5 segundos de timeout
 
-            try (PrintWriter writer = new PrintWriter(socket.getOutputStream(), true);
-                 BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
+            try {
+                ObjectOutputStream objectOutput = new ObjectOutputStream(socket.getOutputStream());
+                objectOutput.flush(); // fuerza el encabezado del stream
+                ObjectInputStream objectInput = new ObjectInputStream(socket.getInputStream());
 
                 // Enviar comando al servidor
                 String command = String.format("ADD_GUEST|%s|%s|%s|%d|%s", name, lastName, gender, id, birth);
-                writer.println(command);
-                writer.flush(); // Asegurarse de que los datos se envíen inmediatamente
+                Request request = new Request(Protocol.ADD_GUEST, command);
+
+                objectOutput.writeObject(request);
+                objectOutput.flush();
 
                 // Leer respuesta del servidor
-                String response = reader.readLine();
-                if (response != null) {
-                    System.out.println("Servidor: " + response);
-                } else {
-                    System.out.println("No se recibió respuesta del servidor");
-                }
+                Object rawResponse = objectInput.readObject();
+                Response response = (Response) rawResponse;
+                    System.out.println("Servidor: " + response.getCommand());
+
+
+                socket.close();
+            } catch (java.net.SocketTimeoutException e) {
+                System.out.println("El servidor no respondió a tiempo");
+                e.printStackTrace();
+
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-
-            socket.close();
-
-        } catch (java.net.SocketTimeoutException e) {
-            System.out.println("El servidor no respondió a tiempo");
-            e.printStackTrace();
-
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (UnknownHostException e) {
+            throw new RuntimeException(e);
+        } catch (SocketException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 
