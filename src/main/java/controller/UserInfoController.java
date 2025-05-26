@@ -43,13 +43,11 @@ public class UserInfoController
             if (!birth.isEmpty())
                 birth=birthDatePicker.getEditor().getText();
             String gender= genderChoiceBox.getSelectionModel().getSelectedItem().toString();
-            int age = Integer.parseInt(ageTextFIeld.getText());
+
             Socket socket = new Socket("localhost", 5000);
             PrintWriter writer = new PrintWriter(socket.getOutputStream(), true);
             BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             String command = String.format("ADD_GUEST|%s|%s|%s|%d|%s", name, lastName, gender,id,birth);
-            if (birth.isEmpty())
-                command = String.format("ADD_GUEST|%s|%s|%s|%d|%d", name, lastName, gender,id,age);
             writer.println(command);
 
             String response = reader.readLine();
