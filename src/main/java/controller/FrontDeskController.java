@@ -5,12 +5,16 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 
 public class FrontDeskController {
+    @javafx.fxml.FXML
+    private BorderPane bp;
+
     @javafx.fxml.FXML
     public void addGuestOnAction(ActionEvent actionEvent) {
         try {
@@ -40,5 +44,16 @@ public class FrontDeskController {
 
     @javafx.fxml.FXML
     public void addRoomOnAction(ActionEvent actionEvent) {
+    }
+
+    @javafx.fxml.FXML
+    public void reservationManagerOnAction(ActionEvent actionEvent) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(MainApp.class.getResource("reservationsManagment.fxml"));
+            Parent view = fxmlLoader.load();
+            bp.setCenter(view);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
