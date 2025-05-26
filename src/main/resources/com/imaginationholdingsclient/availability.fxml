@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="459.0" prefWidth="831.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.RoomsAvailabilityController">
+    <children>
+        <Pane prefHeight="497.0" prefWidth="799.0" style="-fx-background-color: #9b9b9b;">
+            <children>
+                <Pane prefHeight="70.0" prefWidth="799.0" style="-fx-background-color: #002cb5;">
+                    <children>
+                        <Text fill="WHITE" layoutX="27.0" layoutY="42.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Disponibilidad de Habitaciones">
+                            <font>
+                                <Font name="System Bold" size="18.0" />
+                            </font>
+                        </Text>
+                    </children>
+                </Pane>
+                <Pane layoutX="36.0" layoutY="79.0" prefHeight="411.0" prefWidth="741.0" style="-fx-background-color: #ffffff;">
+                    <children>
+                        <Text layoutX="25.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Consultar Disponibilidad">
+                            <font>
+                                <Font name="System Bold" size="14.0" />
+                            </font>
+                        </Text>
+                        <Text fill="#838383" layoutX="32.0" layoutY="68.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Hotel a Consultar" />
+                        <Text fill="#838383" layoutX="217.0" layoutY="68.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tipo de Habitación" />
+                        <ComboBox fx:id="roomTypeComboBox" layoutX="217.0" layoutY="72.0" prefWidth="150.0" />
+                        <DatePicker fx:id="entryDatePicker" layoutX="392.0" layoutY="72.0" prefHeight="25.0" prefWidth="156.0" />
+                        <DatePicker fx:id="exitDatePicker" layoutX="567.0" layoutY="72.0" prefHeight="25.0" prefWidth="150.0" />
+                        <ComboBox fx:id="hotelComboBox" layoutX="31.0" layoutY="72.0" prefWidth="150.0" />
+                        <Text fill="#838383" layoutX="567.0" layoutY="68.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Fecha de sálida" />
+                        <Text fill="#838383" layoutX="392.0" layoutY="68.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Fecha de entrada" />
+                        <ScrollPane layoutX="32.0" layoutY="156.0" prefHeight="247.0" prefWidth="689.0">
+                            <content>
+                                <TableView fx:id="roomAvailabilityOnAction" prefHeight="243.0" prefWidth="690.0">
+                                    <columns>
+                                        <TableColumn fx:id="colHotel" prefWidth="75.0" text="Hotel" />
+                                        <TableColumn fx:id="colRoomId" prefWidth="75.0" text="Habitación ID" />
+                                        <TableColumn fx:id="colType" prefWidth="75.0" text="Tipo" />
+                                        <TableColumn fx:id="colStatus" prefWidth="75.0" text="Estado" />
+                                        <TableColumn fx:id="colPrice" prefWidth="75.0" text="Precio" />
+                                    </columns>
+                                </TableView>
+                            </content>
+                        </ScrollPane>
+                        <Button layoutX="571.0" layoutY="107.0" mnemonicParsing="false" onAction="#checkAvailability" prefHeight="30.0" prefWidth="150.0" text="Consultar">
+                            <font>
+                                <Font name="System Bold" size="14.0" />
+                            </font>
+                        </Button>
+                        <Button layoutX="392.0" layoutY="107.0" mnemonicParsing="false" onAction="#cancelOnAction" prefHeight="30.0" prefWidth="156.0" text="Cancelar">
+                            <font>
+                                <Font name="System Bold" size="14.0" />
+                            </font>
+                        </Button>
+                    </children>
+                </Pane>
+            </children>
+        </Pane>
+    </children>
+</AnchorPane>
