@@ -38,6 +38,7 @@ public class UserInfoController
             String name = nameTextField.getText();
             String lastName =lastNameTextField.getText();
             String birth="";
+
             if (birthDatePicker.getValue() != null)
                 birth=birthDatePicker.getValue().toString();
             if (!birth.isEmpty())
@@ -47,7 +48,9 @@ public class UserInfoController
             Socket socket = new Socket("localhost", 5000);
             PrintWriter writer = new PrintWriter(socket.getOutputStream(), true);
             BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+
             String command = String.format("ADD_GUEST|%s|%s|%s|%d|%s", name, lastName, gender,id,birth);
+
             writer.println(command);
 
             String response = reader.readLine();

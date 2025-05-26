@@ -10,7 +10,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="721.0" prefWidth="1080.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/23.0.1" fx:controller="controller.FrontDeskController">
+<BorderPane fx:id="bp" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="721.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.FrontDeskController">
     <center>
         <AnchorPane prefHeight="723.0" prefWidth="1050.0" BorderPane.alignment="CENTER" />
     </center>
@@ -47,7 +47,7 @@
                                 </Menu>
                                 <Menu mnemonicParsing="false" text="Reservations">
                                     <items>
-                                        <MenuItem mnemonicParsing="false" text="Reservations" />
+                                        <MenuItem mnemonicParsing="false" onAction="#reservationManagerOnAction" text="Reservation Manager" />
                                     </items>
                                 </Menu>
                             </menus>
