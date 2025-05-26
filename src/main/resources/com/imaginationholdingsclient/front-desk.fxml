@@ -33,11 +33,13 @@
                                 <Menu mnemonicParsing="false" text="Hotels">
                                     <items>
                                         <MenuItem mnemonicParsing="false" text="Hotels" />
+                              <MenuItem mnemonicParsing="false" onAction="#addHotelOnAction" text="Add Hotel" />
                                     </items>
                                 </Menu>
                                 <Menu mnemonicParsing="false" text="Rooms">
                                     <items>
                                         <MenuItem mnemonicParsing="false" onAction="#addRoomOnAction" text="Add Room" />
+                              <MenuItem mnemonicParsing="false" onAction="#checkAvailabilityOnAction" text="Check Availables" />
                                     </items>
                                 </Menu>
                                 <Menu mnemonicParsing="false" text="Guests">

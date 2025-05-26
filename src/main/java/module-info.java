@@ -1,6 +1,7 @@
 module com.imaginationholdingsclient {
     requires javafx.controls;
     requires javafx.fxml;
+    requires javafx.graphics;
     requires imaginationHoldingsLibrary;
 
 

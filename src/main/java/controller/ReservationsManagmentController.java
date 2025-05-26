@@ -1,15 +1,17 @@
 package controller;
 
+import com.imaginationHoldings.domain.RoomType;
 import com.imaginationHoldings.domain.StayPeriod;
+import com.imaginationHoldings.protocol.Protocol;
+import com.imaginationHoldings.protocol.Request;
+import com.imaginationHoldings.protocol.Response;
 import javafx.event.ActionEvent;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.Socket;
 import java.time.LocalDate;
 
@@ -22,7 +24,7 @@ public class ReservationsManagmentController
     @javafx.fxml.FXML
     private TextField guestMailTextField;
     @javafx.fxml.FXML
-    private ComboBox roomTypeComboBox;
+    private ComboBox<RoomType> roomTypeComboBox;
     @javafx.fxml.FXML
     private TextField guestAmountTextField;
     @javafx.fxml.FXML
@@ -32,6 +34,9 @@ public class ReservationsManagmentController
 
     @javafx.fxml.FXML
     public void initialize() {
+        for (RoomType roomType : RoomType.values()) {
+            roomTypeComboBox.getItems().add(roomType);
+        }
     }
 
     @javafx.fxml.FXML
@@ -49,19 +54,21 @@ public class ReservationsManagmentController
         String entryDate =entryDatePicker.getValue().toString();
         int id = Integer.parseInt(guestMailTextField.getText());
         String checkOutDate = exitDatePicker.getValue().toString();
-        String roomType = roomTypeComboBox.getValue().toString();
+        String roomType = roomTypeComboBox.getValue().getDescription();
+        int guestsAmount = Integer.parseInt(guestAmountTextField.getText());
 
         Socket socket = new Socket("localhost", 5000);
-        PrintWriter writer = new PrintWriter(socket.getOutputStream(), true);
-        BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            ObjectOutputStream objectOutput = new ObjectOutputStream(socket.getOutputStream());
+            objectOutput.flush(); // fuerza el encabezado del stream
+            ObjectInputStream objectInput = new ObjectInputStream(socket.getInputStream());
 
-        String command = String.format("ADD_GUEST|%s|%s|%s|%s|%d|%s", guestName[0],guestName[1], entryDate, checkOutDate,id,roomType);
+        String command = String.format("RESERVE_ROOM|%s|%s|%s|%s|%d|%s|%d", guestName[0],guestName[1], entryDate, checkOutDate,id,roomType,guestsAmount);
+            Request request = new Request(Protocol.RESERVE_ROOM,command);
+        objectOutput.writeObject(request);
 
-        writer.println(command);
-
-        String response = reader.readLine();
-        System.out.println("Servidor: " + response);
-
+        Object rawresponse = objectInput.readObject();
+        Response response = (Response) rawresponse;
+            System.out.println("Servidor: " + response.getCommand());
         socket.close();
     }catch (Exception e){
             e.printStackTrace();

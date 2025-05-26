@@ -1,14 +1,15 @@
 package controller;
 
 import com.imaginationHoldings.domain.Guest;
+import com.imaginationHoldings.protocol.Protocol;
+import com.imaginationHoldings.protocol.Request;
+import com.imaginationHoldings.protocol.Response;
 import javafx.event.ActionEvent;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.Socket;
 
 public class UserInfoController
@@ -25,6 +26,7 @@ public class UserInfoController
     private TextField ageTextFIeld;
     @javafx.fxml.FXML
     private ComboBox genderChoiceBox;
+
 
     @javafx.fxml.FXML
     public void initialize() {
@@ -46,15 +48,19 @@ public class UserInfoController
             String gender= genderChoiceBox.getSelectionModel().getSelectedItem().toString();
 
             Socket socket = new Socket("localhost", 5000);
-            PrintWriter writer = new PrintWriter(socket.getOutputStream(), true);
-            BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            ObjectOutputStream objectOutput = new ObjectOutputStream(socket.getOutputStream());
+            objectOutput.flush(); // fuerza el encabezado del stream
+            ObjectInputStream objectInput = new ObjectInputStream(socket.getInputStream());
+            String command=String.format("ADD_GUEST|%s|%s|%s|%d|%s", name, lastName, gender,id,birth);
+            Request request = new Request(Protocol.ADD_GUEST,command);
 
-            String command = String.format("ADD_GUEST|%s|%s|%s|%d|%s", name, lastName, gender,id,birth);
+            objectOutput.writeObject(request);
 
-            writer.println(command);
-
-            String response = reader.readLine();
-            System.out.println("Servidor: " + response);
+            Object rawResponse = objectInput.readObject();
+            if (rawResponse instanceof Response) {
+                Response response = (Response) rawResponse;
+                System.out.println("Servidor: " + response.getCommand());
+            }
 
             socket.close();
 

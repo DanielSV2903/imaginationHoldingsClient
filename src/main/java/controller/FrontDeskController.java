@@ -44,12 +44,41 @@ public class FrontDeskController {
 
     @javafx.fxml.FXML
     public void addRoomOnAction(ActionEvent actionEvent) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(MainApp.class.getResource("roomsManagment.fxml"));
+            Parent view = fxmlLoader.load();
+            bp.setCenter(view);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @javafx.fxml.FXML
     public void reservationManagerOnAction(ActionEvent actionEvent) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(MainApp.class.getResource("reservationsManagment.fxml"));
+            Parent view = fxmlLoader.load();
+            bp.setCenter(view);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @javafx.fxml.FXML
+    public void addHotelOnAction(ActionEvent actionEvent) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(MainApp.class.getResource("register.fxml"));
+            Parent view = fxmlLoader.load();
+            bp.setCenter(view);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @javafx.fxml.FXML
+    public void checkAvailabilityOnAction(ActionEvent actionEvent) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(MainApp.class.getResource("availability.fxml"));
             Parent view = fxmlLoader.load();
             bp.setCenter(view);
         } catch (IOException e) {
