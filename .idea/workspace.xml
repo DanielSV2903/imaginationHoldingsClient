@@ -4,7 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="55330825-95a2-465c-85d0-007405df562f" name="Changes" comment="limpieza" />
+    <list default="true" id="55330825-95a2-465c-85d0-007405df562f" name="Changes" comment="limpieza">
+      <change afterPath="$PROJECT_DIR$/src/main/java/controller/HotelManagmentController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/controller/PaymentsController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/controller/RoomsAvailabilityController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/controller/RoomsManagmentController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/com/imaginationholdingsclient/availability.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/com/imaginationholdingsclient/hotelManagment.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/com/imaginationholdingsclient/payments.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/com/imaginationholdingsclient/roomsManagment.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/imaginationholdingsclient/hello-view.fxml" beforeDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -13,6 +24,7 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="Class" />
         <option value="FxmlFile" />
       </list>
     </option>
@@ -46,6 +58,7 @@
     "Application.MainApp.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "main",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/DanielSV/Documents/2025/proyecto progra2/imaginationHoldingsLibrary/out/artifacts/imaginationHoldingsLibrary_jar/imaginationHoldingsLibrary.jar",
@@ -72,7 +85,7 @@
       <module name="imaginationHoldingsClient" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.imaginationholdingsclient.*" />
+          <option name="PATTERN" value="controller.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
