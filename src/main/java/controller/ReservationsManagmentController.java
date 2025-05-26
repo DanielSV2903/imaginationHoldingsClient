@@ -1,5 +1,11 @@
 package controller;
 
+import javafx.event.ActionEvent;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+
 public class ReservationsManagmentController
 {
     @javafx.fxml.FXML
