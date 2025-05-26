@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+
+<AnchorPane prefHeight="521.0" prefWidth="765.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ReservationsManagmentController">
+   <children>
+      <Pane prefHeight="521.0" prefWidth="764.0" style="-fx-background-color: #bdbdbd;">
+         <children>
+            <Pane prefHeight="50.0" prefWidth="764.0" style="-fx-background-color: #0031c9;">
+               <children>
+                  <Text fill="WHITE" layoutX="24.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Gestión de Reservaciones">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Text>
+               </children>
+            </Pane>
+            <Pane layoutX="14.0" layoutY="60.0" prefHeight="216.0" prefWidth="737.0" style="-fx-background-color: #ffffff;">
+               <children>
+                  <Text layoutX="26.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nueva Reservación">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Text>
+                  <Text fill="#808080" layoutX="26.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nombre del Huésped" />
+                  <TextField fx:id="guestNameTextField" layoutX="26.0" layoutY="59.0" prefHeight="25.0" prefWidth="316.0" />
+                  <Text fill="#808080" layoutX="26.0" layoutY="109.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Fecha de Entrada" />
+                  <DatePicker fx:id="entryDatePicker" layoutX="26.0" layoutY="113.0" prefHeight="25.0" prefWidth="143.0" />
+                  <Text fill="#808080" layoutX="208.0" layoutY="108.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Fecha de Entrada" />
+                  <DatePicker fx:id="exitDatePicker" layoutX="199.0" layoutY="113.0" prefHeight="25.0" prefWidth="143.0" />
+                  <Text fill="#808080" layoutX="387.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Correo Electronico" />
+                  <TextField fx:id="guestMailTextField" layoutX="387.0" layoutY="59.0" prefHeight="25.0" prefWidth="316.0" />
+                  <Text fill="#808080" layoutX="387.0" layoutY="105.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Número de Huespedes" />
+                  <TextField fx:id="guestAmountTextField" layoutX="388.0" layoutY="113.0" prefHeight="25.0" prefWidth="143.0" />
+                  <Text fill="#808080" layoutX="551.0" layoutY="105.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tipo de Habitación" />
+                  <ComboBox fx:id="roomTypeComboBox" layoutX="551.0" layoutY="113.0" prefWidth="150.0" />
+                  <Button layoutX="551.0" layoutY="159.0" mnemonicParsing="false" onAction="#createReservationsOnAction" prefHeight="25.0" prefWidth="150.0" text="Crear Reservación" />
+                  <Button layoutX="388.0" layoutY="159.0" mnemonicParsing="false" onAction="#cancelOnAction" prefHeight="25.0" prefWidth="143.0" text="Cancelar" />
+               </children>
+            </Pane>
+            <TableView fx:id="reservationsTableView" layoutX="14.0" layoutY="296.0" prefHeight="200.0" prefWidth="572.0">
+              <columns>
+                <TableColumn prefWidth="75.0" text="Huésped" />
+                <TableColumn prefWidth="75.0" text="Habitación" />
+                  <TableColumn prefWidth="75.0" text="Entrada" />
+                  <TableColumn prefWidth="75.0" text="Salida" />
+              </columns>
+            </TableView>
+            <Pane layoutX="600.0" layoutY="296.0" prefHeight="200.0" prefWidth="150.0" style="-fx-background-color: #ffffff;">
+               <children>
+                  <Text layoutX="14.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Acciones">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Text>
+                  <Button layoutX="14.0" layoutY="49.0" mnemonicParsing="false" onAction="#deleteReservationOnAction" text="Eliminar Reservación" />
+                  <Button layoutX="14.0" layoutY="88.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="125.0" text="Generar Reporte" />
+               </children>
+            </Pane>
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>
