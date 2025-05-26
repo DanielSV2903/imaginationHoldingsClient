@@ -45,18 +45,33 @@ public class UserInfoController
                 birth=birthDatePicker.getEditor().getText();
             String gender= genderChoiceBox.getSelectionModel().getSelectedItem().toString();
 
-            Socket socket = new Socket("localhost", 5000);
-            PrintWriter writer = new PrintWriter(socket.getOutputStream(), true);
-            BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            Socket socket = new Socket("6.tcp.ngrok.io", 19800);
 
-            String command = String.format("ADD_GUEST|%s|%s|%s|%d|%s", name, lastName, gender,id,birth);
+            // Establecer timeout para evitar bloqueos indefinidos
+            socket.setSoTimeout(5000); // 5 segundos de timeout
 
-            writer.println(command);
+            try (PrintWriter writer = new PrintWriter(socket.getOutputStream(), true);
+                 BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
 
-            String response = reader.readLine();
-            System.out.println("Servidor: " + response);
+                // Enviar comando al servidor
+                String command = String.format("ADD_GUEST|%s|%s|%s|%d|%s", name, lastName, gender, id, birth);
+                writer.println(command);
+                writer.flush(); // Asegurarse de que los datos se envíen inmediatamente
+
+                // Leer respuesta del servidor
+                String response = reader.readLine();
+                if (response != null) {
+                    System.out.println("Servidor: " + response);
+                } else {
+                    System.out.println("No se recibió respuesta del servidor");
+                }
+            }
 
             socket.close();
+
+        } catch (java.net.SocketTimeoutException e) {
+            System.out.println("El servidor no respondió a tiempo");
+            e.printStackTrace();
 
         } catch (Exception e) {
             e.printStackTrace();
