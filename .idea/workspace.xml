@@ -4,9 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="55330825-95a2-465c-85d0-007405df562f" name="Changes" comment="add guest pop Up">
+    <list default="true" id="55330825-95a2-465c-85d0-007405df562f" name="Changes" comment="avances">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/UserInfoController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/UserInfoController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/FrontDeskController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/FrontDeskController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/HotelManagmentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/HotelManagmentController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/imaginationholdingsclient/front-desk.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/imaginationholdingsclient/front-desk.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/imaginationholdingsclient/hotelManagment.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/imaginationholdingsclient/hotelManagment.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -39,30 +42,31 @@
   &quot;associatedIndex&quot;: 6
 }</component>
   <component name="ProjectId" id="2xbyzc5YC1vG8gUnmoU28GJx3gB" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.MainApp.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/DanielSV/Documents/2025/proyecto progra2/imaginationHoldingsLibrary/out/artifacts/imaginationHoldingsLibrary_jar/imaginationHoldingsLibrary.jar&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.MainApp.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/DanielSV/Documents/2025/proyecto progra2/imaginationHoldingsLibrary",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Libraries",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RunManager">
     <configuration name="MainApp" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.imaginationholdingsclient.MainApp" />
@@ -135,7 +139,15 @@
       <option name="project" value="LOCAL" />
       <updated>1748234237935</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="avances">
+      <option name="closed" value="true" />
+      <created>1748286452909</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1748286452909</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -155,6 +167,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="limpieza" />
     <MESSAGE value="add guest pop Up" />
-    <option name="LAST_COMMIT_MESSAGE" value="add guest pop Up" />
+    <MESSAGE value="avances" />
+    <option name="LAST_COMMIT_MESSAGE" value="avances" />
   </component>
 </project>

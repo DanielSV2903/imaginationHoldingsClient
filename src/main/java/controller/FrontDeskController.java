@@ -85,4 +85,15 @@ public class FrontDeskController {
             e.printStackTrace();
         }
     }
+
+    @javafx.fxml.FXML
+    public void removeHotelOnAction(ActionEvent actionEvent) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(MainApp.class.getResource("hotelManagment.fxml"));
+            Parent view = fxmlLoader.load();
+            bp.setCenter(view);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
