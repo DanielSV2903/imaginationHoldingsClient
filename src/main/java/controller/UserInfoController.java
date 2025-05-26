@@ -1,15 +1,14 @@
 package controller;
 
 import com.imaginationHoldings.domain.Guest;
-import com.imaginationHoldings.protocol.Protocol;
-import com.imaginationHoldings.protocol.Request;
-import com.imaginationHoldings.protocol.Response;
 import javafx.event.ActionEvent;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.net.Socket;
 
 public class UserInfoController
@@ -26,7 +25,6 @@ public class UserInfoController
     private TextField ageTextFIeld;
     @javafx.fxml.FXML
     private ComboBox genderChoiceBox;
-
 
     @javafx.fxml.FXML
     public void initialize() {
@@ -47,22 +45,33 @@ public class UserInfoController
                 birth=birthDatePicker.getEditor().getText();
             String gender= genderChoiceBox.getSelectionModel().getSelectedItem().toString();
 
-            Socket socket = new Socket("localhost", 5000);
-            ObjectOutputStream objectOutput = new ObjectOutputStream(socket.getOutputStream());
-            objectOutput.flush(); // fuerza el encabezado del stream
-            ObjectInputStream objectInput = new ObjectInputStream(socket.getInputStream());
-            String command=String.format("ADD_GUEST|%s|%s|%s|%d|%s", name, lastName, gender,id,birth);
-            Request request = new Request(Protocol.ADD_GUEST,command);
+            Socket socket = new Socket("6.tcp.ngrok.io", 19800);
 
-            objectOutput.writeObject(request);
+            // Establecer timeout para evitar bloqueos indefinidos
+            socket.setSoTimeout(5000); // 5 segundos de timeout
 
-            Object rawResponse = objectInput.readObject();
-            if (rawResponse instanceof Response) {
-                Response response = (Response) rawResponse;
-                System.out.println("Servidor: " + response.getCommand());
+            try (PrintWriter writer = new PrintWriter(socket.getOutputStream(), true);
+                 BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
+
+                // Enviar comando al servidor
+                String command = String.format("ADD_GUEST|%s|%s|%s|%d|%s", name, lastName, gender, id, birth);
+                writer.println(command);
+                writer.flush(); // Asegurarse de que los datos se envíen inmediatamente
+
+                // Leer respuesta del servidor
+                String response = reader.readLine();
+                if (response != null) {
+                    System.out.println("Servidor: " + response);
+                } else {
+                    System.out.println("No se recibió respuesta del servidor");
+                }
             }
 
             socket.close();
+
+        } catch (java.net.SocketTimeoutException e) {
+            System.out.println("El servidor no respondió a tiempo");
+            e.printStackTrace();
 
         } catch (Exception e) {
             e.printStackTrace();
