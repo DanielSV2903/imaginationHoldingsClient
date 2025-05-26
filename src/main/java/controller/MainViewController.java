@@ -1,5 +1,6 @@
 package controller;
 
+
 import com.imaginationHoldings.protocol.Protocol;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
@@ -11,9 +12,9 @@ import java.io.PrintWriter;
 import java.net.Socket;
 
 public class MainViewController {
+
     @FXML
     private TextArea outputArea;
-
     @FXML
     public void handleGetAllHotels() {
         try (Socket socket = new Socket("localhost", 5000);
