@@ -5,10 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="55330825-95a2-465c-85d0-007405df562f" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/controller/RegisterHotelController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/com/imaginationholdingsclient/register.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/controller/FrontDeskController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/com/imaginationholdingsclient/front-desk.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/RegisterHotelController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/RegisterHotelController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/imaginationholdingsclient/imaginationholdingsclient/HelloApplication.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/imaginationholdingsclient/imaginationholdingsclient/HelloController.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/imaginationholdingsclient/main-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/imaginationholdingsclient/main-view.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/imaginationholdingsclient/imaginationholdingsclient/hello-view.fxml" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -19,35 +25,36 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="FxmlFile" />
+        <option value="Class" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "chocol3it"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;chocol3it&quot;
   }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/DanielSV2903/imaginationHoldingsClient.git",
-    "accountId": "72ca0cd9-c338-45df-908f-c7fbb70e4ecf"
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/DanielSV2903/imaginationHoldingsClient.git&quot;,
+    &quot;accountId&quot;: &quot;72ca0cd9-c338-45df-908f-c7fbb70e4ecf&quot;
   }
-}]]></component>
+}</component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 6
 }</component>
   <component name="ProjectId" id="2xbyzc5YC1vG8gUnmoU28GJx3gB" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Application.MainApp.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "git-widget-placeholder": "main",
