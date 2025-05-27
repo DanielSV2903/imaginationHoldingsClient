@@ -112,10 +112,14 @@ public class ReservationsManagmentController
 
     @javafx.fxml.FXML
     public void cancelOnAction(ActionEvent actionEvent) {
+        cleanFields();
     }
 
     @javafx.fxml.FXML
     public void createReservationsOnAction(ActionEvent actionEvent) {
+        if (!validarEntradas())
+            return;
+
         try {
         String[] guestName = guestNameTextField.getText().split(" ");
         String entryDate =entryDatePicker.getValue().toString();
@@ -146,5 +150,95 @@ public class ReservationsManagmentController
     }catch (Exception e){
             e.printStackTrace();
         }
+    }
+
+    private void cleanFields() {
+        guestNameTextField.clear();
+        guestMailTextField.clear();
+        guestAmountTextField.clear();
+        entryDatePicker.setValue(null);
+        exitDatePicker.setValue(null);
+        roomTypeComboBox.getSelectionModel().clearSelection();
+    }
+
+    private static void mostrarAlerta(String mensaje) {
+        Alert alerta = new Alert(Alert.AlertType.ERROR);
+        alerta.setTitle("Error de Validación");
+        alerta.setHeaderText(null);
+        alerta.setContentText(mensaje);
+        alerta.showAndWait();
+    }
+
+    private boolean validarEntradas() {
+        if (guestNameTextField.getText().trim().isEmpty()) {
+            mostrarAlerta("El nombre del huésped es obligatorio");
+            guestNameTextField.requestFocus();
+            return false;
+        }
+
+        if (guestAmountTextField.getText().trim().isEmpty()) {
+            mostrarAlerta("La cantidad de huéspedes es obligatoria");
+            guestAmountTextField.requestFocus();
+            return false;
+        }
+
+        int guestAmount;
+        try {
+            guestAmount = Integer.parseInt(guestAmountTextField.getText().trim());
+            if (guestAmount <= 0) {
+                mostrarAlerta("La cantidad de huéspedes debe ser mayor que 0");
+                guestAmountTextField.requestFocus();
+                return false;
+            }
+        } catch (NumberFormatException e) {
+            mostrarAlerta("Ingrese un número válido para la cantidad de huéspedes");
+            guestAmountTextField.requestFocus();
+            return false;
+        }
+
+        if (entryDatePicker.getValue() == null) {
+            mostrarAlerta("Seleccione la fecha de entrada.");
+            entryDatePicker.requestFocus();
+            return false;
+        }
+
+        if (exitDatePicker.getValue() == null) {
+            mostrarAlerta("Seleccione la fecha de salida.");
+            exitDatePicker.requestFocus();
+            return false;
+        }
+
+        LocalDate entryDate = entryDatePicker.getValue();
+        LocalDate exitDate = exitDatePicker.getValue();
+        LocalDate today = LocalDate.now();
+
+        if (entryDate.isBefore(today)) {
+            mostrarAlerta("La fecha de entrada no puede ser anterior a hoy");
+            entryDatePicker.requestFocus();
+            return false;
+        }
+
+        if (!exitDate.isAfter(entryDate)) {
+            mostrarAlerta("La fecha de salida debe ser posterior a la de entrada");
+            exitDatePicker.requestFocus();
+            return false;
+        }
+
+        RoomType roomType = roomTypeComboBox.getValue();
+        if (roomType == null) {
+            mostrarAlerta("Debe seleccionar un tipo de habitación");
+            roomTypeComboBox.requestFocus();
+            return false;
+        }
+
+        if (guestAmount > roomType.getCapacity()) {
+            mostrarAlerta(String.format(
+                    "La cantidad de huéspedes (%d) excede la capacidad del tipo de habitación (%d)",
+                    guestAmount, roomType.getCapacity()));
+            guestAmountTextField.requestFocus();
+            return false;
+        }
+
+        return true;
     }
 }

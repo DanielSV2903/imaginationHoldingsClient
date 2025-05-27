@@ -8,15 +8,13 @@ import com.imaginationHoldings.protocol.Request;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.time.LocalDate;
 import java.util.List;
 
 public class RoomsAvailabilityController
@@ -91,10 +89,74 @@ public class RoomsAvailabilityController
 
     @javafx.fxml.FXML
     public void cancelOnAction(ActionEvent actionEvent) {
+        cleanFields();
     }
 
     @javafx.fxml.FXML
     public void checkAvailability(ActionEvent actionEvent) {
+        if (!validarEntradas())
+            return;
 
+        try {
+
+        } catch (Exception e){
+            mostrarAlerta("Error inesperado: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+
+    }
+
+    private void cleanFields(){
+        hotelComboBox.getSelectionModel().clearSelection();
+        roomTypeComboBox.getSelectionModel().clearSelection();
+        entryDatePicker.setValue(null);
+        exitDatePicker.setValue(null);
+    }
+
+    private static void mostrarAlerta(String mensaje) {
+        Alert alerta = new Alert(Alert.AlertType.ERROR);
+        alerta.setTitle("Error de Validación");
+        alerta.setHeaderText(null);
+        alerta.setContentText(mensaje);
+        alerta.showAndWait();
+    }
+
+    private boolean validarEntradas() {
+        if (hotelComboBox.getSelectionModel().getSelectedItem() == null) {
+            mostrarAlerta("Debe seleccionar un hotel para consultar disponibilidad");
+            hotelComboBox.requestFocus();
+            return false;
+        }
+
+        if (entryDatePicker.getValue() == null) {
+            mostrarAlerta("Debe seleccionar una fecha de entrada");
+            entryDatePicker.requestFocus();
+            return false;
+        }
+
+        if (exitDatePicker.getValue() == null) {
+            mostrarAlerta("Debe seleccionar una fecha de salida");
+            exitDatePicker.requestFocus();
+            return false;
+        }
+
+        LocalDate entryDate = entryDatePicker.getValue();
+        LocalDate exitDate = exitDatePicker.getValue();
+        LocalDate today = LocalDate.now();
+
+        if (entryDate.isBefore(today)) {
+            mostrarAlerta("La fecha de entrada no puede ser antes que la fecha actual");
+            entryDatePicker.requestFocus();
+            return false;
+        }
+
+        if (exitDate.isBefore(entryDate) || exitDate.isEqual(entryDate)) {
+            mostrarAlerta("La fecha de salida debe ser después a la fecha de entrada");
+            exitDatePicker.requestFocus();
+            return false;
+        }
+
+        return true;
     }
 }
