@@ -35,17 +35,21 @@
                                         <MenuItem mnemonicParsing="false" text="Hotels" />
                               <MenuItem mnemonicParsing="false" onAction="#addHotelOnAction" text="Add Hotel" />
                               <MenuItem mnemonicParsing="false" onAction="#removeHotelOnAction" text="Remove Hotel" />
+                              <MenuItem mnemonicParsing="false" onAction="#editHotelOnAction" text="Edit Hotels" />
                                     </items>
                                 </Menu>
                                 <Menu mnemonicParsing="false" text="Rooms">
                                     <items>
                                         <MenuItem mnemonicParsing="false" onAction="#addRoomOnAction" text="Add Room" />
                               <MenuItem mnemonicParsing="false" onAction="#checkAvailabilityOnAction" text="Check Availables" />
+                              <MenuItem mnemonicParsing="false" onAction="#deleteRooms" text="Delete Rooms" />
                                     </items>
                                 </Menu>
                                 <Menu mnemonicParsing="false" text="Guests">
                                     <items>
                                         <MenuItem mnemonicParsing="false" onAction="#addGuestOnAction" text="Add Guest" />
+                              <MenuItem mnemonicParsing="false" onAction="#removeGuestOnAction" text="Remove Guest" />
+                              <MenuItem mnemonicParsing="false" onAction="#editGuestOnAction" text="Edit Guest" />
                                     </items>
                                 </Menu>
                                 <Menu mnemonicParsing="false" text="Reservations">

@@ -41,14 +41,15 @@
                         </TableView>
                      </content>
                   </ScrollPane>
-                  <Text layoutX="30.0" layoutY="273.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Seleccionar Hotel a eliminar">
+                  <Text layoutX="30.0" layoutY="258.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Seleccionar Hotel ">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Text>
-                  <ComboBox fx:id="hotelComboBox" layoutX="30.0" layoutY="287.0" prefHeight="25.0" prefWidth="477.0" />
-                  <Button layoutX="273.0" layoutY="331.0" mnemonicParsing="false" onAction="#deleteHotelOnAction" prefHeight="25.0" prefWidth="234.0" text="Eliminar Hotel" />
+                  <ComboBox fx:id="hotelComboBox" layoutX="30.0" layoutY="271.0" prefHeight="25.0" prefWidth="477.0" />
+                  <Button layoutX="269.0" layoutY="306.0" mnemonicParsing="false" onAction="#deleteHotelOnAction" prefHeight="25.0" prefWidth="234.0" text="Eliminar Hotel" />
                   <Button layoutX="30.0" layoutY="331.0" mnemonicParsing="false" onAction="#cancelOnAction" prefHeight="25.0" prefWidth="234.0" text="Cancelar" />
+                  <Button layoutX="269.0" layoutY="344.0" mnemonicParsing="false" onAction="#editOnAction" prefHeight="25.0" prefWidth="234.0" text="Editar" />
                </children>
             </Pane>
          </children>

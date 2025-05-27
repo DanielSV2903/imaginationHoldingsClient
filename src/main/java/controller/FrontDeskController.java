@@ -96,4 +96,20 @@ public class FrontDeskController {
             e.printStackTrace();
         }
     }
+
+    @javafx.fxml.FXML
+    public void deleteRooms(ActionEvent actionEvent) {
+    }
+
+    @javafx.fxml.FXML
+    public void editHotelOnAction(ActionEvent actionEvent) {
+    }
+
+    @javafx.fxml.FXML
+    public void removeGuestOnAction(ActionEvent actionEvent) {
+    }
+
+    @javafx.fxml.FXML
+    public void editGuestOnAction(ActionEvent actionEvent) {
+    }
 }

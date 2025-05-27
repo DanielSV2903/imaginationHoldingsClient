@@ -9,35 +9,34 @@ import com.imaginationHoldings.protocol.Request;
 import com.imaginationHoldings.protocol.Response;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.fxml.FXML;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.io.*;
 import java.net.Socket;
 import java.util.List;
+import java.util.Optional;
 
 public class RoomsManagmentController
 {
-    @javafx.fxml.FXML
+    @FXML
     private TextField pricePerNightTextField;
-    @javafx.fxml.FXML
+    @FXML
     private TextField roomCapacityTextField;
-    @javafx.fxml.FXML
+    @FXML
     private ComboBox<Hotel> roomRegistrationHotelComboBox;
-    @javafx.fxml.FXML
+    @FXML
     private TextField roomIdTextField;
-    @javafx.fxml.FXML
+    @FXML
     private ComboBox<RoomType> roomTypeComboBox;
-    @javafx.fxml.FXML
+    @FXML
     private TextField bedAmountTextField;
-    @javafx.fxml.FXML
+    @FXML
     private ComboBox<Hotel> selectHotelComboBox;
-    @javafx.fxml.FXML
+    @FXML
     private TextField descriptionTextField;
-    @javafx.fxml.FXML
+    @FXML
     private TableView<Room> roomsTableVIew;
     private HotelServiceData hotelServiceData;
     private  List<Room> rooms;
@@ -45,14 +44,14 @@ public class RoomsManagmentController
     private Socket socket;
     private  ObjectOutputStream objectOutput;
     private ObjectInputStream objectInput;
-    @javafx.fxml.FXML
+    @FXML
     private TableColumn<Room,String> roomTypeCol;
-    @javafx.fxml.FXML
+    @FXML
     private TableColumn<Room,Integer> idCol;
-    @javafx.fxml.FXML
+    @FXML
     private TableColumn<Room,String> hotelCol;
 
-    @javafx.fxml.FXML
+    @FXML
     public void initialize() {
         try {
             socket = new Socket("localhost", 5000);
@@ -77,8 +76,10 @@ public class RoomsManagmentController
 
 
             // Aquí puedes poblar el combo y la tabla si quieres:
-            selectHotelComboBox.getItems().addAll(hotels);
-            roomRegistrationHotelComboBox.getItems().addAll(hotels);
+            for (Hotel h:hotels) {
+                selectHotelComboBox.getItems().add(h);
+                roomRegistrationHotelComboBox.getItems().add(h);
+            }
 
             for (RoomType roomType : RoomType.values()) {
                 roomTypeComboBox.getItems().add(roomType);
@@ -97,15 +98,62 @@ public class RoomsManagmentController
         }
     }
 
-    @javafx.fxml.FXML
+    @FXML
     public void cancelOnAction(ActionEvent actionEvent) {
     }
 
-    @javafx.fxml.FXML
+    @FXML
     public void deleteRoomOnAction(ActionEvent actionEvent) {
+        try {
+        Room toDelete =roomsTableVIew.getSelectionModel().getSelectedItem();
+        Request request=new Request(Protocol.DELETE_ROOM,toDelete);
+        Alert alert=new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Delete Room");
+        alert.setHeaderText(null);
+        alert.setContentText("Do you want to delete this room?\n"+toDelete.toString());
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get()==ButtonType.OK) {
+            objectOutput.writeObject(request);
+            objectOutput.flush();
+
+            Object rawResponse=objectInput.readObject();
+            Response response=(Response) rawResponse;
+            System.out.println("Servidor: "+response.getCommand());
+            if (response.getCommand().equals("ROOM_DELETED")) {
+                alert=new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Delete Room");
+                alert.setHeaderText(null);
+                alert.setContentText("Room Deleted!");
+                alert.showAndWait();
+                updateTview();
+            }
+        }else this.roomsTableVIew.getSelectionModel().clearSelection();
+    } catch (IOException | ClassNotFoundException e) {
+    throw new RuntimeException(e);
+}
     }
 
-    @javafx.fxml.FXML
+    private void updateTview() throws IOException, ClassNotFoundException {
+        this.roomsTableVIew.getItems().clear();
+        Request request=new Request(Protocol.GET_ALL_ROOMS);
+        objectOutput.writeObject(request);
+        objectOutput.flush();
+        rooms=(List<Room>) objectInput.readObject();
+        this.roomsTableVIew.getItems().addAll(rooms);
+    }
+    private void filterTView(){
+        Hotel hotel= roomRegistrationHotelComboBox.getSelectionModel().getSelectedItem();
+        if (hotel != null) {
+            this.roomsTableVIew.getItems().clear();
+        for (Room room : rooms) {
+            if (room.getHotel().getId()==hotel.getId()) {
+                this.roomsTableVIew.getItems().add(room);
+            }
+        }
+        }
+    }
+
+    @FXML
     public void registerRoomOnAction(ActionEvent actionEvent) {
         int id = Integer.parseInt(roomIdTextField.getText());
         RoomType roomType = roomTypeComboBox.getSelectionModel().getSelectedItem();
@@ -142,7 +190,7 @@ public class RoomsManagmentController
                 Response response1 = (Response) rawResponse;
                 rooms=(List<Room>) response1.getData();
             }
-            roomsTableVIew.getItems().setAll(rooms);
+            updateTview();
         }catch (Exception e) {
             e.printStackTrace();
         }
@@ -155,5 +203,10 @@ public class RoomsManagmentController
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @FXML
+    public void filterRoomTView(ActionEvent actionEvent) {
+        filterTView();
     }
 }

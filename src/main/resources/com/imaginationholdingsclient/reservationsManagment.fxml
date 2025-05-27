@@ -49,10 +49,10 @@
             </Pane>
             <TableView fx:id="reservationsTableView" layoutX="14.0" layoutY="296.0" prefHeight="200.0" prefWidth="572.0">
               <columns>
-                <TableColumn prefWidth="75.0" text="Huésped" />
-                <TableColumn prefWidth="75.0" text="Habitación" />
-                  <TableColumn prefWidth="75.0" text="Entrada" />
-                  <TableColumn prefWidth="75.0" text="Salida" />
+                <TableColumn fx:id="guestCol" prefWidth="75.0" text="Huésped" />
+                <TableColumn fx:id="roomCol" prefWidth="75.0" text="Habitación" />
+                  <TableColumn fx:id="checkIn" prefWidth="75.0" text="Entrada" />
+                  <TableColumn fx:id="checkOut" prefWidth="75.0" text="Salida" />
               </columns>
             </TableView>
             <Pane layoutX="600.0" layoutY="296.0" prefHeight="200.0" prefWidth="150.0" style="-fx-background-color: #ffffff;">
