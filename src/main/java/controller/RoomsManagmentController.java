@@ -12,6 +12,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.GridPane;
 
 import java.io.*;
 import java.net.Socket;
@@ -104,33 +105,59 @@ public class RoomsManagmentController
 
     @FXML
     public void deleteRoomOnAction(ActionEvent actionEvent) {
-        try {
-        Room toDelete =roomsTableVIew.getSelectionModel().getSelectedItem();
-        Request request=new Request(Protocol.DELETE_ROOM,toDelete);
-        Alert alert=new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Delete Room");
-        alert.setHeaderText(null);
-        alert.setContentText("Do you want to delete this room?\n"+toDelete.toString());
-        Optional<ButtonType> result = alert.showAndWait();
-        if (result.get()==ButtonType.OK) {
-            objectOutput.writeObject(request);
-            objectOutput.flush();
+        Room selectedRoom = roomsTableVIew.getSelectionModel().getSelectedItem();
 
-            Object rawResponse=objectInput.readObject();
-            Response response=(Response) rawResponse;
-            System.out.println("Servidor: "+response.getCommand());
-            if (response.getCommand().equals("ROOM_DELETED")) {
-                alert=new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Delete Room");
-                alert.setHeaderText(null);
-                alert.setContentText("Room Deleted!");
-                alert.showAndWait();
-                updateTview();
+        if (selectedRoom == null) {
+            Alert warning = new Alert(Alert.AlertType.WARNING);
+            warning.setTitle("No Selection");
+            warning.setHeaderText(null);
+            warning.setContentText("Please select a room to delete.");
+            warning.showAndWait();
+            return;
+        }
+
+        Alert confirmation = new Alert(Alert.AlertType.CONFIRMATION);
+        confirmation.setTitle("Delete Room");
+        confirmation.setHeaderText("Are you sure?");
+        confirmation.setContentText("Do you want to delete the following room?\n" + selectedRoom);
+
+        Optional<ButtonType> result = confirmation.showAndWait();
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            try {
+                Request request = new Request(Protocol.DELETE_ROOM, selectedRoom);
+                objectOutput.writeObject(request);
+                objectOutput.flush();
+
+                Object rawResponse = objectInput.readObject();
+                if (rawResponse instanceof Response response) {
+                    if ("ROOM_DELETED".equals(response.getCommand())) {
+                        Alert success = new Alert(Alert.AlertType.INFORMATION);
+                        success.setTitle("Success");
+                        success.setHeaderText(null);
+                        success.setContentText("Room deleted successfully.");
+                        success.showAndWait();
+                        updateTview();
+                    } else {
+                        Alert failure = new Alert(Alert.AlertType.ERROR);
+                        failure.setTitle("Error");
+                        failure.setHeaderText("Deletion Failed");
+                        failure.setContentText("Could not delete the room.");
+                        failure.showAndWait();
+                    }
+                } else {
+                    throw new IOException("Unexpected server response.");
+                }
+            } catch (IOException | ClassNotFoundException e) {
+                e.printStackTrace();
+                Alert error = new Alert(Alert.AlertType.ERROR);
+                error.setTitle("Communication Error");
+                error.setHeaderText("An error occurred");
+                error.setContentText(e.getMessage());
+                error.showAndWait();
             }
-        }else this.roomsTableVIew.getSelectionModel().clearSelection();
-    } catch (IOException | ClassNotFoundException e) {
-    throw new RuntimeException(e);
-}
+        } else {
+            roomsTableVIew.getSelectionModel().clearSelection();
+        }
     }
 
     private void updateTview() throws IOException, ClassNotFoundException {
@@ -205,8 +232,141 @@ public class RoomsManagmentController
         }
     }
 
-    @FXML
+    @Deprecated
     public void filterRoomTView(ActionEvent actionEvent) {
         filterTView();
     }
+
+    @FXML
+    public void editRoomOnAction(ActionEvent actionEvent) {
+        Room selectedRoom = roomsTableVIew.getSelectionModel().getSelectedItem();
+
+        if (selectedRoom == null) {
+            Alert noSelectionAlert = new Alert(Alert.AlertType.WARNING);
+            noSelectionAlert.setTitle("No Selection");
+            noSelectionAlert.setHeaderText(null);
+            noSelectionAlert.setContentText("Please select a room to edit.");
+            noSelectionAlert.showAndWait();
+            return;
+        }
+
+        Dialog<Room> dialog = new Dialog<>();
+        dialog.setTitle("Edit Room");
+        dialog.setHeaderText("Modify room details");
+
+        ButtonType saveButtonType = new ButtonType("Save", ButtonBar.ButtonData.OK_DONE);
+        dialog.getDialogPane().getButtonTypes().addAll(saveButtonType, ButtonType.CANCEL);
+
+        GridPane grid = new GridPane();
+        grid.setHgap(10);
+        grid.setVgap(10);
+
+        // Campos editables
+        TextField locationField = new TextField(selectedRoom.getLocation());
+        ChoiceBox<RoomType> typeChoiceBox = new ChoiceBox<>();
+        typeChoiceBox.getItems().addAll(RoomType.values());
+        typeChoiceBox.setValue(selectedRoom.getRoomType());
+
+        ChoiceBox<Boolean> availabilityChoiceBox = new ChoiceBox<>();
+        availabilityChoiceBox.getItems().addAll(true, false);
+        availabilityChoiceBox.setValue(selectedRoom.isAvailable());
+
+        grid.add(new Label("Location:"), 0, 0);
+        grid.add(locationField, 1, 0);
+        grid.add(new Label("Room Type:"), 0, 1);
+        grid.add(typeChoiceBox, 1, 1);
+        grid.add(new Label("Available:"), 0, 2);
+        grid.add(availabilityChoiceBox, 1, 2);
+
+        dialog.getDialogPane().setContent(grid);
+
+        dialog.setResultConverter(dialogButton -> {
+            if (dialogButton == saveButtonType) {
+                selectedRoom.setLocation(locationField.getText());
+                selectedRoom.setRoomType(typeChoiceBox.getValue());
+                selectedRoom.setAvailability(availabilityChoiceBox.getValue());
+                return selectedRoom;
+            }
+            return null;
+        });
+
+        Optional<Room> result = dialog.showAndWait();
+
+        result.ifPresent(editedRoom -> {
+            try {
+                Request request = new Request(Protocol.EDIT_ROOM, editedRoom);
+                objectOutput.writeObject(request);
+                objectOutput.flush();
+
+                Object responseObj = objectInput.readObject();
+                if (responseObj instanceof Response response && "ROOM_UPDATED".equals(response.getCommand())) {
+                    Alert confirmation = new Alert(Alert.AlertType.INFORMATION);
+                    confirmation.setTitle("Success");
+                    confirmation.setHeaderText(null);
+                    confirmation.setContentText("Room updated successfully.");
+                    confirmation.showAndWait();
+                    updateTview();
+                } else {
+                    Alert error = new Alert(Alert.AlertType.ERROR);
+                    error.setTitle("Update Failed");
+                    error.setHeaderText(null);
+                    error.setContentText("Failed to update the room.");
+                    error.showAndWait();
+                }
+            } catch (IOException | ClassNotFoundException e) {
+                e.printStackTrace();
+                Alert error = new Alert(Alert.AlertType.ERROR);
+                error.setTitle("Error");
+                error.setHeaderText("An error occurred");
+                error.setContentText(e.getMessage());
+                error.showAndWait();
+            }
+        });
+    }
+//        Room room=roomsTableVIew.getSelectionModel().getSelectedItem();
+//        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+//        alert.setTitle("Editar Hotel");
+//        GridPane gridPane=new GridPane();
+//        gridPane.add(new Label("Type"),0,0);
+//        gridPane.add(new Label("Availability"),0,1);
+//        gridPane.add(new Label("Location"),0,2);
+//        TextField tfLocation=new TextField();
+//        TextField tfAddress=new TextField();
+//        ChoiceBox<RoomType> typeChoiceBox=new ChoiceBox<>();
+//        for (RoomType type : RoomType.values()) {
+//            typeChoiceBox.getItems().add(type);
+//        }
+//        ChoiceBox<Boolean> availabilityChoiceBox=new ChoiceBox();
+//        availabilityChoiceBox.getItems().add(true);
+//        availabilityChoiceBox.getItems().add(false);
+//        gridPane.add(typeChoiceBox,1,0);
+//        gridPane.add(availabilityChoiceBox,1,1);
+//        gridPane.add(tfLocation,1,2);
+//        alert.getDialogPane().setContent(gridPane);
+//        alert.showAndWait();
+//        RoomType roomType=typeChoiceBox.getSelectionModel().getSelectedItem();
+//        boolean availability=availabilityChoiceBox.getSelectionModel().getSelectedItem();
+//        String address=tfAddress.getText();
+//        room.setAvailability(availability);
+//        room.setLocation(address);
+//        room.setRoomType(roomType);
+//        Request getRoomsRequest = new Request(Protocol.EDIT_ROOM,room);
+//        try {
+//            objectOutput.writeObject(getRoomsRequest);
+//            objectOutput.flush();
+//            Response response= (Response) objectInput.readObject();
+//            if (response.getCommand().equals("ROOM_UPDATED")){
+//                Alert alert2 = new Alert(Alert.AlertType.INFORMATION);
+//                alert2.setTitle("Edit Room");
+//                alert2.setHeaderText(null);
+//                alert2.setContentText("Room updated successfully.");
+//                alert2.showAndWait();
+//
+//            }
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        } catch (ClassNotFoundException e) {
+//            throw new RuntimeException(e);
+//        }
+//    }
 }

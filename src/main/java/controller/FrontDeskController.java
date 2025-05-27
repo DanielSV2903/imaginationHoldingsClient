@@ -111,5 +111,12 @@ public class FrontDeskController {
 
     @javafx.fxml.FXML
     public void editGuestOnAction(ActionEvent actionEvent) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(MainApp.class.getResource("manageGuest.fxml"));
+            Parent view = fxmlLoader.load();
+            bp.setCenter(view);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
