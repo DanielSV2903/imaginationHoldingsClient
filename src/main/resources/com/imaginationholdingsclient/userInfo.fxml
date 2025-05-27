@@ -28,14 +28,12 @@
                   <TextField fx:id="nameTextField" layoutX="25.0" layoutY="80.0" prefHeight="25.0" prefWidth="166.0" />
                   <Text layoutX="200.0" layoutY="77.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Apellidos" />
                   <TextField fx:id="lastNameTextField" layoutX="200.0" layoutY="80.0" prefHeight="25.0" prefWidth="183.0" />
-                  <Text layoutX="25.0" layoutY="135.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Edad" />
-                  <TextField fx:id="ageTextFIeld" layoutX="25.0" layoutY="139.0" prefHeight="25.0" prefWidth="166.0" />
                   <ComboBox fx:id="genderChoiceBox" layoutX="200.0" layoutY="139.0" prefHeight="25.0" prefWidth="183.0" />
                   <Text layoutX="200.0" layoutY="134.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Género" />
                   <Text layoutX="25.0" layoutY="197.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cédula de Identidad / Pasaporte" />
                   <TextField fx:id="iDTextFIeld" layoutX="25.0" layoutY="201.0" prefHeight="25.0" prefWidth="359.0" />
-                  <DatePicker fx:id="birthDatePicker" layoutX="23.0" layoutY="259.0" />
-                  <Text layoutX="24.0" layoutY="255.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Fecha de Nacimiento" />
+                  <DatePicker fx:id="birthDatePicker" layoutX="23.0" layoutY="139.0" prefHeight="25.0" prefWidth="166.0" />
+                  <Text layoutX="26.0" layoutY="133.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Fecha de Nacimiento" />
                   <Button layoutX="205.0" layoutY="344.0" mnemonicParsing="false" onAction="#confirmButtonOnAction" prefHeight="25.0" prefWidth="183.0" text="Confirmar" />
                   <Button layoutX="26.0" layoutY="344.0" mnemonicParsing="false" onAction="#cancelOnAction" prefHeight="25.0" prefWidth="166.0" text="Cancelar" />
                </children>

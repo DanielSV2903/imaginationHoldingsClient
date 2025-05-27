@@ -27,7 +27,7 @@ public class RegisterHotelController
 
     @javafx.fxml.FXML
     public void createHotelOnAction(ActionEvent actionEvent) {
-        if (!validarCampos())
+        if (!validarEntradas())
             return;
 
 
@@ -94,7 +94,7 @@ public class RegisterHotelController
         alerta.showAndWait();
     }
 
-    private boolean validarCampos() {
+    private boolean validarEntradas() {
         if (hotelIdTextField.getText().trim().isEmpty()) {
             mostrarAlerta("El ID del hotel es obligatorio.");
             hotelIdTextField.requestFocus();
