@@ -100,6 +100,7 @@ public class RoomsManagmentController
 
     @FXML
     public void cancelOnAction(ActionEvent actionEvent) {
+        cleanFields();
     }
 
     @FXML
@@ -209,4 +210,101 @@ public class RoomsManagmentController
     public void filterRoomTView(ActionEvent actionEvent) {
         filterTView();
     }
+
+    private void cleanFields() {
+        roomIdTextField.clear();
+        roomTypeComboBox.getSelectionModel().clearSelection();
+        roomRegistrationHotelComboBox.getSelectionModel().clearSelection();
+        bedAmountTextField.clear();
+        pricePerNightTextField.clear();
+        descriptionTextField.clear();
+        roomCapacityTextField.clear();
+    }
+
+    private void mostrarAlerta(String mensaje) {
+        Alert alerta = new Alert(Alert.AlertType.ERROR);
+        alerta.setTitle("Error");
+        alerta.setHeaderText(null);
+        alerta.setContentText(mensaje);
+        alerta.showAndWait();
+    }
+
+    private boolean validarEntradas() {
+        if (roomIdTextField.getText().trim().isEmpty()) {
+            mostrarAlerta("El ID de la habitación es obligatorio");
+            roomIdTextField.requestFocus();
+            return false;
+        }
+
+        try {
+            int roomId = Integer.parseInt(roomIdTextField.getText().trim());
+            if (roomId <= 0) {
+                mostrarAlerta("El ID de la habitación debe ser un número positivo");
+                roomIdTextField.requestFocus();
+                return false;
+            }
+        } catch (NumberFormatException e) {
+            mostrarAlerta("El ID de la habitación debe ser un número válido");
+            roomIdTextField.requestFocus();
+            return false;
+        }
+
+        if (roomTypeComboBox.getSelectionModel().getSelectedItem() == null) {
+            mostrarAlerta("Debe seleccionar un tipo de habitación");
+            roomTypeComboBox.requestFocus();
+            return false;
+        }
+
+        try {
+            int bedAmount = Integer.parseInt(bedAmountTextField.getText().trim());
+            if (bedAmount <= 0) {
+                mostrarAlerta("La cantidad de camas debe ser un número positivo");
+                bedAmountTextField.requestFocus();
+                return false;
+            }
+
+        } catch (NumberFormatException e) {
+            mostrarAlerta("La cantidad de camas debe ser un número válido");
+            bedAmountTextField.requestFocus();
+            return false;
+        }
+
+        if (roomRegistrationHotelComboBox.getSelectionModel().getSelectedItem() == null) {
+            mostrarAlerta("Debe seleccionar un hotel para la habitación");
+            roomRegistrationHotelComboBox.requestFocus();
+            return false;
+        }
+
+        if (!pricePerNightTextField.getText().trim().isEmpty()) {
+            try {
+                double price = Double.parseDouble(pricePerNightTextField.getText().trim());
+                if (price < 0) {
+                    mostrarAlerta("El precio por noche no puede ser negativo");
+                    pricePerNightTextField.requestFocus();
+                    return false;
+                }
+
+            } catch (NumberFormatException e) {
+                mostrarAlerta("El precio por noche debe ser un número válido");
+                pricePerNightTextField.requestFocus();
+                return false;
+            }
+        }
+
+        if (rooms != null) {
+            Hotel selectedHotel = roomRegistrationHotelComboBox.getSelectionModel().getSelectedItem();
+            int roomId = Integer.parseInt(roomIdTextField.getText().trim());
+
+            for (Room existingRoom : rooms) {
+                if (existingRoom.getHotel().equals(selectedHotel) && existingRoom.getRoomNumber() == roomId) {
+                    mostrarAlerta("Ya existe una habitación con este ID en el hotel seleccionado");
+                    roomIdTextField.requestFocus();
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
 }

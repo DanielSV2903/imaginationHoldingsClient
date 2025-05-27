@@ -117,6 +117,9 @@ public class ReservationsManagmentController
 
     @javafx.fxml.FXML
     public void createReservationsOnAction(ActionEvent actionEvent) {
+        if (!validarEntradas())
+            return;
+
         try {
         String[] guestName = guestNameTextField.getText().split(" ");
         String entryDate =entryDatePicker.getValue().toString();
