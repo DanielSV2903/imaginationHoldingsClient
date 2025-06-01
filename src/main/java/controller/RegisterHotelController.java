@@ -20,6 +20,7 @@ public class RegisterHotelController
     private TextField hotelIdTextField;
     @javafx.fxml.FXML
     private TextField roomsNumberOnAction;
+    private final String SERVER_IP="10.59.18.238";
 
     @javafx.fxml.FXML
     public void initialize() {
@@ -36,7 +37,7 @@ public class RegisterHotelController
             String hotelName = hotelNameTextField.getText();
             String address = addressTextField.getText();
 
-            Socket socket = new Socket("localhost", 5000);
+            Socket socket = new Socket(MainViewController.SERVER_IP, MainViewController.PORT);
             ObjectOutputStream objectOutput = new ObjectOutputStream(socket.getOutputStream());
             objectOutput.flush(); // fuerza el encabezado del stream
             ObjectInputStream objectInput = new ObjectInputStream(socket.getInputStream());

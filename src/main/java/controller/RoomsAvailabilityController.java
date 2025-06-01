@@ -44,11 +44,12 @@ public class RoomsAvailabilityController
     private ObjectInputStream objectInput;
     @javafx.fxml.FXML
     private TableView<Room> tView;
+    private final String SERVER_IP="10.59.18.238";
 
     @javafx.fxml.FXML
     public void initialize() {
         try {
-            socket = new Socket("localhost", 5000);
+            socket = new Socket(MainViewController.SERVER_IP, MainViewController.PORT);
             objectOutput = new ObjectOutputStream(socket.getOutputStream());
             objectOutput.flush(); // fuerza el encabezado del stream
             objectInput = new ObjectInputStream(socket.getInputStream());

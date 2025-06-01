@@ -72,7 +72,7 @@
             <Pane layoutX="449.0" layoutY="57.0" prefHeight="98.0" prefWidth="368.0" style="-fx-background-color: #ffffff;">
                <children>
                   <Text fill="#727272" layoutX="17.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Seleccionar Hotel" />
-                  <ComboBox fx:id="selectHotelComboBox" layoutX="17.0" layoutY="59.0" prefHeight="25.0" prefWidth="174.0" />
+                  <ComboBox fx:id="selectHotelComboBox" layoutX="17.0" layoutY="59.0" onAction="#filterRoomTView" prefHeight="25.0" prefWidth="174.0" />
                   <Button layoutX="233.0" layoutY="59.0" mnemonicParsing="false" onAction="#deleteRoomOnAction" text="Eliminar Habitación" />
                   <Text layoutX="17.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Acciones">
                      <font>

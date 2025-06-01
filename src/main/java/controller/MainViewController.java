@@ -12,12 +12,15 @@ import java.io.PrintWriter;
 import java.net.Socket;
 
 public class MainViewController {
+//    public static final String SERVER_IP="localhost";
+    public static final String SERVER_IP="10.59.57.18";
+    public static final int PORT=5002;
 
     @FXML
     private TextArea outputArea;
     @FXML
     public void handleGetAllHotels() {
-        try (Socket socket = new Socket("localhost", 5000);
+        try (Socket socket = new Socket(MainViewController.SERVER_IP, MainViewController.PORT);
              BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
              PrintWriter writer = new PrintWriter(socket.getOutputStream(), true)) {
 

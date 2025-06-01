@@ -15,6 +15,7 @@ public class FrontDeskController {
     @javafx.fxml.FXML
     private BorderPane bp;
 
+
     @javafx.fxml.FXML
     public void addGuestOnAction(ActionEvent actionEvent) {
         try {

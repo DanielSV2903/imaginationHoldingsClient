@@ -27,6 +27,7 @@ public class UserInfoController
     private TextField nameTextField;
     @javafx.fxml.FXML
     private ComboBox genderChoiceBox;
+    private final String SERVER_IP="10.59.18.238";
 
     @javafx.fxml.FXML
     public void initialize() {
@@ -51,7 +52,7 @@ public class UserInfoController
                 birth = birthDatePicker.getEditor().getText();
             String gender = genderChoiceBox.getSelectionModel().getSelectedItem().toString();
 
-            Socket socket = new Socket("localhost", 5000);
+            Socket socket = new Socket(MainViewController.SERVER_IP, MainViewController.PORT);
 
             // Establecer timeout para evitar bloqueos indefinidos
             socket.setSoTimeout(5000); // 5 segundos de timeout
@@ -70,7 +71,7 @@ public class UserInfoController
 
                 // Leer respuesta del servidor
                 Object rawResponse = objectInput.readObject();
-                Response response = (Response) rawResponse;
+                Response response=new Response((String) rawResponse);
                     System.out.println("Servidor: " + response.getCommand());
 
                 if (response.getCommand().equals("GUEST_REGISTERED")) {

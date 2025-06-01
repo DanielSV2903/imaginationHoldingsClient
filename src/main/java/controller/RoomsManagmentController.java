@@ -51,11 +51,12 @@ public class RoomsManagmentController
     private TableColumn<Room,Integer> idCol;
     @FXML
     private TableColumn<Room,String> hotelCol;
+    private final String SERVER_IP="10.59.18.238";
 
     @FXML
     public void initialize() {
         try {
-            socket = new Socket("localhost", 5000);
+            socket = new Socket(MainViewController.SERVER_IP, MainViewController.PORT);
             objectOutput = new ObjectOutputStream(socket.getOutputStream());
             objectOutput.flush(); // fuerza el encabezado del stream
             objectInput = new ObjectInputStream(socket.getInputStream());
@@ -232,7 +233,7 @@ public class RoomsManagmentController
         }
     }
 
-    @Deprecated
+    @FXML
     public void filterRoomTView(ActionEvent actionEvent) {
         filterTView();
     }
@@ -312,6 +313,7 @@ public class RoomsManagmentController
                     error.setHeaderText(null);
                     error.setContentText("Failed to update the room.");
                     error.showAndWait();
+                    updateTview();
                 }
             } catch (IOException | ClassNotFoundException e) {
                 e.printStackTrace();

@@ -12,6 +12,7 @@ import javafx.scene.layout.GridPane;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,12 +34,14 @@ public class HotelManagmentController
     private  ObjectOutputStream objectOutput;
     private ObjectInputStream objectInput;
 
+
     @javafx.fxml.FXML
     public void initialize() {
         hotels=new ArrayList<>();
         try {
-             socket = new Socket("localhost", 5000);
-             objectOutput = new ObjectOutputStream(socket.getOutputStream());
+             socket = new Socket(MainViewController.SERVER_IP, MainViewController.PORT);
+            socket.setKeepAlive(true);
+            objectOutput = new ObjectOutputStream(socket.getOutputStream());
             objectOutput.flush(); // fuerza el encabezado del stream
              objectInput = new ObjectInputStream(socket.getInputStream());
             // Enviar comando al servidor
@@ -106,6 +109,7 @@ public class HotelManagmentController
                             info.setHeaderText(null);
                             info.setContentText("Hotel deleted successfully.");
                             info.showAndWait();
+                            updateTV();
                         } else {
                             Alert error = new Alert(Alert.AlertType.ERROR);
                             error.setTitle("Error");
@@ -114,7 +118,6 @@ public class HotelManagmentController
                             error.showAndWait();
                         }
                     }
-                    updateTV();
 
                 } catch (IOException | ClassNotFoundException e) {
                     e.printStackTrace();
@@ -199,6 +202,7 @@ public class HotelManagmentController
                         info.setHeaderText(null);
                         info.setContentText("Hotel updated successfully.");
                         info.showAndWait();
+                        updateTV();
                     } else {
                         Alert error = new Alert(Alert.AlertType.ERROR);
                         error.setTitle("Update Failed");

@@ -25,6 +25,7 @@ public class PaymentsController
     private TableView paymentTableView;
     @javafx.fxml.FXML
     private TableColumn colCustomer;
+    private final String SERVER_IP="10.59.18.238";
 
     @javafx.fxml.FXML
     public void initialize() {
