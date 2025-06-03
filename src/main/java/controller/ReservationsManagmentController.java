@@ -1,9 +1,6 @@
 package controller;
 
-import com.imaginationHoldings.domain.Booking;
-import com.imaginationHoldings.domain.Room;
-import com.imaginationHoldings.domain.RoomType;
-import com.imaginationHoldings.domain.StayPeriod;
+import com.imaginationHoldings.domain.*;
 import com.imaginationHoldings.protocol.Protocol;
 import com.imaginationHoldings.protocol.Request;
 import com.imaginationHoldings.protocol.Response;
@@ -49,6 +46,7 @@ public class ReservationsManagmentController
     private Socket socket;
     private ObjectOutputStream objectOutput;
     private ObjectInputStream objectInput;
+    private Hotel hotel;
     private final String SERVER_IP="10.59.18.238";
 
     @javafx.fxml.FXML
@@ -241,5 +239,13 @@ public class ReservationsManagmentController
         }
 
         return true;
+    }
+
+    public Hotel getHotel() {
+        return hotel;
+    }
+
+    public void setHotel(Hotel hotel) {
+        this.hotel = hotel;
     }
 }
