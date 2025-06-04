@@ -24,7 +24,7 @@
                 </Pane>
                 <ScrollPane layoutX="14.0" layoutY="165.0" prefHeight="280.0" prefWidth="807.0">
                <content>
-                        <TableView fx:id="roomsTableVIew" prefHeight="286.0" prefWidth="798.0">
+                        <TableView fx:id="guestTableView" prefHeight="286.0" prefWidth="798.0">
                             <columns>
                                 <TableColumn fx:id="idCol" prefWidth="75.0" text="id" />
                                 <TableColumn fx:id="nameCol" prefWidth="75.0" text="Name" />

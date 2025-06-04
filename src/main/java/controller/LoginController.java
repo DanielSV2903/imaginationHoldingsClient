@@ -39,17 +39,47 @@ public class LoginController
             case "front desk" -> role = UserRole.FRONTDESK;
             default -> role = null;
         }
-
-        if (role != null && role.getPriority() == 1) {
-            try {
-                Stage stage = (Stage) bp.getScene().getWindow();
-                FXMLLoader loader = new FXMLLoader(MainApp.class.getResource("clientView.fxml"));
-                Scene newScene = new Scene(loader.load());
-                stage.setScene(newScene);
-                stage.setTitle("Client View");
-                stage.show();
-            } catch (IOException e) {
-                e.printStackTrace();
+        switch (role){
+            case ADMIN -> {}
+            case CLIENT -> {
+                if (role != null && role.getPriority() == 1) {
+                    try {
+                        Stage stage = (Stage) bp.getScene().getWindow();
+                        FXMLLoader loader = new FXMLLoader(MainApp.class.getResource("clientView.fxml"));
+                        Scene newScene = new Scene(loader.load());
+                        stage.setScene(newScene);
+                        stage.setTitle("Client View");
+                        stage.show();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+            case FRONTDESK -> {
+                if (role != null && role.getPriority() == 2) {
+                    try {
+                        Stage stage = (Stage) bp.getScene().getWindow();
+                        FXMLLoader loader = new FXMLLoader(MainApp.class.getResource("front-desk.fxml"));
+                        Scene newScene = new Scene(loader.load());
+                        stage.setScene(newScene);
+                        stage.setTitle("Front Desk View");
+                        stage.show();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+            default -> {
+                try {
+                    Stage stage = (Stage) bp.getScene().getWindow();
+                    FXMLLoader loader = new FXMLLoader(MainApp.class.getResource("front-desk.fxml"));
+                    Scene newScene = new Scene(loader.load());
+                    stage.setScene(newScene);
+                    stage.setTitle("Front Desk View");
+                    stage.show();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }

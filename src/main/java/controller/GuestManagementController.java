@@ -1,10 +1,9 @@
 package controller;
 
-import com.imaginationHoldings.domain.Booking;
 import com.imaginationHoldings.domain.Guest;
-import com.imaginationHoldings.domain.RoomType;
 import com.imaginationHoldings.protocol.Protocol;
 import com.imaginationHoldings.protocol.Request;
+import com.imaginationHoldings.protocol.Response;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.scene.control.*;
@@ -28,10 +27,9 @@ public class GuestManagementController {
     @javafx.fxml.FXML
     private TableColumn<Guest,String> nameCol;
     @javafx.fxml.FXML
-    private TableView<Guest> roomsTableVIew;
+    private TableView<Guest> guestTableView;
     @javafx.fxml.FXML
     private TableColumn lastNameCol;
-    private final String SERVER_IP="10.59.18.238";
     private Socket socket;
     private ObjectOutputStream objectOutput;
     private ObjectInputStream objectInput;
@@ -45,72 +43,125 @@ public class GuestManagementController {
             objectOutput = new ObjectOutputStream(socket.getOutputStream());
             objectOutput.flush(); // fuerza el encabezado del stream
             objectInput = new ObjectInputStream(socket.getInputStream());
-//            Request request = new Request(Protocol.GET_ALL_GUESTS);
-//            objectOutput.writeObject(request);
-//            objectOutput.flush();
-//            guests= (List<Guest>) objectInput.readObject();
-            Guest g1 =new Guest("Daniel","Sanchez","M",119310249,"29/03/2005");
-            Guest g2 =new Guest("Lucia","Ramirez","F",119870249,"11/01/2000");
-            Guest g3 =new Guest("Juan","Perèz","M",789310249,"30/11/2004");
-            guests.add(g1);
-            guests.add(g2);
-            guests.add(g3);
-
+            Request request = new Request(Protocol.GET_ALL_GUESTS);
+            objectOutput.writeObject(request);
+            objectOutput.flush();
+            guests= (List<Guest>) objectInput.readObject();
             idCol.setCellValueFactory(new PropertyValueFactory<>("id"));
             nameCol.setCellValueFactory(new PropertyValueFactory<>("firstName"));
             lastNameCol.setCellValueFactory(new PropertyValueFactory<>("lastName"));
             ageCol.setCellValueFactory(new PropertyValueFactory<>("age"));
             bDateCol.setCellValueFactory(cellData->new SimpleStringProperty(cellData.getValue().getBirthDate().toString()));
-            roomsTableVIew.getItems().addAll(guests);
-        } catch (IOException e) {
+            for (Guest g:guests){
+                guestTableView.getItems().add(g);
+            }
+        } catch (IOException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
     private void updateTview()  {
-        this.roomsTableVIew.getItems().clear();
-//        Request request=new Request(Protocol.GET_GUESTS);
-//        objectOutput.writeObject(request);
-//        objectOutput.flush();
-//        bookings=(List<Booking>) objectInput.readObject();
+        this.guestTableView.getItems().clear();
+        Request request=new Request(Protocol.GET_ALL_GUESTS);
+        try {
+            objectOutput.writeObject(request);
+            objectOutput.flush();
+            guests= (List<Guest>) objectInput.readObject();
+        } catch (IOException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
         for(Guest guest : guests){
-            this.roomsTableVIew.getItems().add(guest);
+            this.guestTableView.getItems().add(guest);
         }
     }
 
     @javafx.fxml.FXML
     public void editRoomOnAction(ActionEvent actionEvent) {
-        Guest selected=roomsTableVIew.getSelectionModel().getSelectedItem();
-        Alert alert =new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Edit Guest");
-        GridPane gp=new GridPane();
-        DatePicker datePicker=new DatePicker();
-        TextField tfName=new TextField();
-        tfName.setPromptText("Name");
-        TextField tfLname=new TextField();
-        tfLname.setPromptText("Last Name");
-        ComboBox<String> comboBox=new ComboBox<>();
-        comboBox.getItems().add("M");
-        comboBox.getItems().add("F");
-        gp.add(tfName,1,0);
-        gp.add(tfLname,1,2);
-        gp.add(comboBox,1,3);
-        gp.add(datePicker,1,4);
-        guests.remove(selected);
-        selected.setFirstName(tfName.getText());
-        selected.setLastName(tfLname.getText());
-        if (datePicker.getEditor().getText().isEmpty())
-            selected.setBirthDate(datePicker.getValue().toString());
-        else selected.setBirthDate(datePicker.getEditor().getText());
-        if (!comboBox.getSelectionModel().isEmpty())
-            selected.setGender(comboBox.getSelectionModel().getSelectedItem());
-        guests.add(selected);
+        Guest selected = guestTableView.getSelectionModel().getSelectedItem();
+        if (selected == null) {
+            // Mostrar alerta si no hay selección
+            Alert alert = new Alert(Alert.AlertType.WARNING, "Seleccione un huésped primero.");
+            alert.showAndWait();
+            return;
+        }
+        GridPane gp = new GridPane();
+        TextField tfName = new TextField(selected.getFirstName());
+        TextField tfLname = new TextField(selected.getLastName());
+        ComboBox<String> comboBox = new ComboBox<>();
+        comboBox.getItems().addAll("M", "F");
+        comboBox.setValue(selected.getGender());
+        DatePicker datePicker = new DatePicker();
+        if (selected.getBirthDate() != null)
+            datePicker.setValue(selected.getBirthDate());
+
+        gp.setHgap(10);
+        gp.setVgap(10);
+        gp.add(new Label("Nombre:"), 0, 0); gp.add(tfName, 1, 0);
+        gp.add(new Label("Apellido:"), 0, 1); gp.add(tfLname, 1, 1);
+        gp.add(new Label("Género:"), 0, 2); gp.add(comboBox, 1, 2);
+        gp.add(new Label("Nacimiento:"), 0, 3); gp.add(datePicker, 1, 3);
+
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Editar huésped");
+        alert.setHeaderText("¿Desea guardar los cambios?");
+        alert.getDialogPane().setContent(gp);
+        alert.showAndWait().ifPresent(response -> {
+            if (response == ButtonType.OK) {
+                if (tfName.getText().isEmpty() || tfLname.getText().isEmpty() || datePicker.getValue() == null || comboBox.getValue() == null) {
+                    Alert errorAlert = new Alert(Alert.AlertType.ERROR, "Todos los campos son obligatorios.");
+                    errorAlert.showAndWait();
+                    return;
+                }
+                selected.setFirstName(tfName.getText());
+                selected.setLastName(tfLname.getText());
+                selected.setGender(comboBox.getValue());
+                selected.setBirthDate(datePicker.getValue().toString());
+            }
+        });
+        Request request=new Request(Protocol.EDIT_GUEST,selected);
+        try {
+            objectOutput.writeObject(request);
+            objectOutput.flush();
+            Object rawResponse=objectInput.readObject();
+            Response response=(Response) rawResponse;
+            if (response.getCommand().equals(Response.GUEST_UPDATED)){
+                alert=new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Guest Status");
+                alert.setContentText("Guest updated successfully.");
+                alert.showAndWait();
+            }else {
+                alert=new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Guest Status");
+                alert.setContentText("Guest was not updated");
+                alert.showAndWait();
+            }
+        } catch (IOException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
         updateTview();
     }
 
     @javafx.fxml.FXML
     public void deleteRoomOnAction(ActionEvent actionEvent) {
-        Guest selected=roomsTableVIew.getSelectionModel().getSelectedItem();
-        guests.remove(selected);
+        Guest selected= guestTableView.getSelectionModel().getSelectedItem();
+        Request request=new Request(Protocol.DELETE_GUEST,selected);
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        try {
+            objectOutput.writeObject(request);
+            objectOutput.flush();
+            Object rawResponse=objectInput.readObject();
+            Response response=(Response) rawResponse;
+            if (response.getCommand().equals(Response.GUEST_DELETED)){
+                alert.setTitle("Guest Status");
+                alert.setContentText("Guest deleted successfully.");
+                alert.showAndWait();
+            }else {
+                alert.setTitle("Guest Status");
+                alert.setContentText("Guest was not deleted");
+                alert.showAndWait();
+            }
+        } catch (IOException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
         updateTview();
     }
 }

@@ -49,7 +49,7 @@ public class ClientViewController
     public void initialize() {
         welcomeLabel.setText("Welcome : "+LoginController.getUserName());
         try {
-            socket=new Socket("localhost",5000);
+            socket=new Socket(MainViewController.SERVER_IP,MainViewController.PORT);
             out = new ObjectOutputStream(socket.getOutputStream());
             in = new ObjectInputStream(socket.getInputStream());
             out.flush();
@@ -79,10 +79,9 @@ public class ClientViewController
     }
         private void openReservationView(Hotel hotel) {
             try {
-                FXMLLoader loader = new FXMLLoader(MainApp.class.getResource("reservationsManagment.fxml"));
+                FXMLLoader loader = new FXMLLoader(MainApp.class.getResource("hotelCardView.fxml"));
                 Parent root = loader.load();
-                ReservationsManagmentController controller = loader.getController();
-                controller.setHotel(hotel);
+                HotelCardViewController controller = loader.getController();
                 Stage stage = new Stage();
                 stage.setTitle("Reservar en " + hotel.getName());
                 stage.setScene(new Scene(root));

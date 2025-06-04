@@ -132,7 +132,7 @@ public class ReservationsManagmentController
 //            objectOutput.flush(); // fuerza el encabezado del stream
 //              objectInput = new ObjectInputStream(socket.getInputStream());
 
-        String command = String.format("RESERVE_ROOM|%s|%s|%s|%s|%d|%s|%d", guestName[0],guestName[1], entryDate, checkOutDate,id,roomType,guestsAmount);
+        String command = String.format("1|%s|%s|%s|%s|%d|%s|%d", guestName[0],guestName[1], entryDate, checkOutDate,id,roomType,guestsAmount);
             Request request = new Request(Protocol.RESERVE_ROOM,command);
         objectOutput.writeObject(request);
 

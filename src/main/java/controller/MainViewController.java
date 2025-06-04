@@ -12,9 +12,9 @@ import java.io.PrintWriter;
 import java.net.Socket;
 
 public class MainViewController {
-//    public static final String SERVER_IP="localhost";
-    public static final String SERVER_IP="10.59.57.18";
-    public static final int PORT=5002;
+    public static final String SERVER_IP="localhost";
+//    public static final String SERVER_IP="10.59.57.18";
+    public static final int PORT=5000;
 
     @FXML
     private TextArea outputArea;

@@ -3,6 +3,7 @@ package controller;
 import com.imaginationHoldings.domain.Hotel;
 import com.imaginationHoldings.domain.Room;
 import com.imaginationHoldings.domain.RoomType;
+import com.imaginationHoldings.domain.StayPeriod;
 import com.imaginationHoldings.protocol.Protocol;
 import com.imaginationHoldings.protocol.Request;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -11,6 +12,7 @@ import javafx.event.ActionEvent;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
@@ -26,7 +28,7 @@ public class RoomsAvailabilityController
     @javafx.fxml.FXML
     private TableColumn<Room,String> colType;
     @javafx.fxml.FXML
-    private ComboBox<RoomType> roomTypeComboBox;
+    private ComboBox<Room> roomTypeComboBox;
     @javafx.fxml.FXML
     private TableColumn<Room,String> colPrice;
     @javafx.fxml.FXML
@@ -71,8 +73,8 @@ public class RoomsAvailabilityController
             rooms = (List<Room>) objectInput.readObject();
             System.out.println("Recibido habitaciones: " + rooms.size());
             this.hotelComboBox.getItems().addAll(hotels);
-            for (RoomType roomType: RoomType.values()) {
-                this.roomTypeComboBox.getItems().add(roomType);
+            for (Room room: rooms) {
+                this.roomTypeComboBox.getItems().add(room);
             }
             this.colHotel.setCellValueFactory(cellData ->
                     new SimpleStringProperty(cellData.getValue().getHotel().getName()));
@@ -97,9 +99,30 @@ public class RoomsAvailabilityController
     public void checkAvailability(ActionEvent actionEvent) {
         if (!validarEntradas())
             return;
-
         try {
-
+            boolean availability=false;
+            LocalDate checkIn= entryDatePicker.getValue();
+            LocalDate checkOut= exitDatePicker.getValue();
+            StayPeriod stayPeriod=new StayPeriod(checkIn,checkOut);
+            Object[] data=new Object[2];
+            data[0]=stayPeriod;
+            data[1]=roomTypeComboBox.getSelectionModel().getSelectedItem().getRoomNumber();
+            Request request=new Request(Protocol.CHECK_AVAILABILITY_BY_STAY_PERIOD,data);
+            try {
+                objectOutput.writeObject(request);
+                objectOutput.flush();
+                availability=objectInput.readBoolean();
+            }catch (IOException e) {}
+            Alert alert=new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Availability");
+            alert.setHeaderText(null);
+            if (availability) {
+                alert.setContentText("Room Available from "+checkIn+" to "+checkOut);
+                alert.showAndWait();
+            }else {
+                alert.setContentText("Room Not Available from "+checkIn+" to "+checkOut);
+                alert.showAndWait();
+            }
         } catch (Exception e){
             mostrarAlerta("Error inesperado: " + e.getMessage());
             e.printStackTrace();

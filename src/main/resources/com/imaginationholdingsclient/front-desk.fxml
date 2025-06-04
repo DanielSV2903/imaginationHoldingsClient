@@ -48,8 +48,7 @@
                                 <Menu mnemonicParsing="false" text="Guests">
                                     <items>
                                         <MenuItem mnemonicParsing="false" onAction="#addGuestOnAction" text="Add Guest" />
-                              <MenuItem mnemonicParsing="false" onAction="#removeGuestOnAction" text="Remove Guest" />
-                              <MenuItem mnemonicParsing="false" onAction="#editGuestOnAction" text="Edit Guest" />
+                              <MenuItem mnemonicParsing="false" onAction="#editGuestOnAction" text="Manage Guest" />
                                     </items>
                                 </Menu>
                                 <Menu mnemonicParsing="false" text="Reservations">

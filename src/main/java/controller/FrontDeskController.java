@@ -106,9 +106,6 @@ public class FrontDeskController {
     public void editHotelOnAction(ActionEvent actionEvent) {
     }
 
-    @javafx.fxml.FXML
-    public void removeGuestOnAction(ActionEvent actionEvent) {
-    }
 
     @javafx.fxml.FXML
     public void editGuestOnAction(ActionEvent actionEvent) {
