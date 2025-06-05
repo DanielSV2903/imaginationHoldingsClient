@@ -23,8 +23,6 @@ import java.util.Optional;
 public class RoomsManagmentController
 {
     @FXML
-    private TextField roomCapacityTextField;
-    @FXML
     private ComboBox<Hotel> roomRegistrationHotelComboBox;
     @FXML
     private TextField roomIdTextField;
@@ -33,38 +31,42 @@ public class RoomsManagmentController
     @FXML
     private TextField bedAmountTextField;
     @FXML
-    private ComboBox<Hotel> selectHotelComboBox;
-    @FXML
     private TextField descriptionTextField;
     @FXML
     private TableView<Room> roomsTableVIew;
+    @FXML
+    private TableColumn<Room, String> roomTypeCol;
+    @FXML
+    private TableColumn<Room, Integer> idCol;
+    @FXML
+    private TableColumn<Room, String> hotelCol;
+    @FXML
+    private TableColumn<Room, String> locationCol;
+    @FXML
+    private TextField filterHotelRoom;
+    @FXML
+    private TextField filterHotel;
+
     private HotelServiceData hotelServiceData;
-    private  List<Room> rooms;
+    private List<Room> rooms;
     private List<Hotel> hotels;
     private Socket socket;
-    private  ObjectOutputStream objectOutput;
+    private ObjectOutputStream objectOutput;
     private ObjectInputStream objectInput;
-    @FXML
-    private TableColumn<Room,String> roomTypeCol;
-    @FXML
-    private TableColumn<Room,Integer> idCol;
-    @FXML
-    private TableColumn<Room,String> hotelCol;
-    private final String SERVER_IP="10.59.18.238";
-    @FXML
-    private TableColumn<Room,String> locationCol;
+    private final String SERVER_IP = "10.59.18.238";
 
     @FXML
     public void initialize() {
-        hotels=new ArrayList<>();
-        rooms=new ArrayList<>();
+        hotels = new ArrayList<>();
+        rooms = new ArrayList<>();
         try {
             socket = new Socket(MainViewController.SERVER_IP, MainViewController.PORT);
             objectOutput = new ObjectOutputStream(socket.getOutputStream());
             objectOutput.flush(); // fuerza el encabezado del stream
             objectInput = new ObjectInputStream(socket.getInputStream());
+
             // Solicitar hoteles
-            Request request=new Request(Protocol.GET_ALL_HOTELS);
+            Request request = new Request(Protocol.GET_ALL_HOTELS);
             objectOutput.writeObject(request);
             objectOutput.flush();
 
@@ -72,43 +74,85 @@ public class RoomsManagmentController
             System.out.println("Recibido hoteles: " + hotels.size());
 
             // Solicitar habitaciones
-            request=new Request(Protocol.GET_ALL_ROOMS);
+            request = new Request(Protocol.GET_ALL_ROOMS);
             objectOutput.writeObject(request);
             objectOutput.flush();
 
             rooms = (List<Room>) objectInput.readObject();
             System.out.println("Recibido habitaciones: " + rooms.size());
 
-
-            // Aquí puedes poblar el combo y la tabla si quieres:
-            for (Hotel h:hotels) {
-                selectHotelComboBox.getItems().add(h);
+            // Poblar el combo de hoteles
+            for (Hotel h : hotels) {
+                //selectHotelComboBox.getItems().add(h);
                 roomRegistrationHotelComboBox.getItems().add(h);
             }
 
+            // Poblar el combo de tipos de habitación
             for (RoomType roomType : RoomType.values()) {
                 roomTypeComboBox.getItems().add(roomType);
             }
-            locationCol.setCellValueFactory(celLData->
-                    new SimpleStringProperty(celLData.getValue().getLocation()));
-            hotelCol.setCellValueFactory(cellData ->
-                    new SimpleStringProperty(cellData.getValue().getHotel().getName()));
 
-            roomTypeCol.setCellValueFactory(cellData ->
-                    new SimpleStringProperty(cellData.getValue().getRoomType().getDescription()));
-
+            // Configuración de la tabla de habitaciones
+            locationCol.setCellValueFactory(celLData -> new SimpleStringProperty(celLData.getValue().getLocation()));
+            hotelCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getHotel().getName()));
+            roomTypeCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getRoomType().getDescription()));
             idCol.setCellValueFactory(new PropertyValueFactory<>("roomNumber"));
             roomsTableVIew.getItems().addAll(rooms);
 
-        }catch (Exception e) {
+            // Filtros de texto
+            filterHotel.textProperty().addListener((observable, oldValue, newValue) -> filterHotels(newValue));
+            filterHotelRoom.textProperty().addListener((observable, oldValue, newValue) -> filterRoomsByHotel(newValue));
+
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
+    // Filtro para el ComboBox de Hoteles
+    private void filterHotels(String filterText) {
+        //selectHotelComboBox.getItems().clear();
+        roomRegistrationHotelComboBox.getItems().clear();
+
+        if (filterText == null || filterText.isEmpty()) {
+            // Si el filtro está vacío, mostramos todos los hoteles
+          //  selectHotelComboBox.getItems().addAll(hotels);
+            roomRegistrationHotelComboBox.getItems().addAll(hotels);
+        } else {
+            String lowerCaseFilter = filterText.toLowerCase();
+            for (Hotel hotel : hotels) {
+                if (hotel.getName().toLowerCase().contains(lowerCaseFilter) || hotel.getAddress().toLowerCase().contains(lowerCaseFilter)) {
+            //        selectHotelComboBox.getItems().add(hotel);
+                    roomRegistrationHotelComboBox.getItems().add(hotel);
+                }
+            }
+        }
+    }
+
+    private void filterRoomsByHotel(String filterText) {
+        roomsTableVIew.getItems().clear(); // Limpiar la tabla antes de agregar los elementos filtrados
+
+        // Si el filtro está vacío, agregar todas las habitaciones
+        if (filterText == null || filterText.isEmpty()) {
+            roomsTableVIew.getItems().addAll(rooms);
+        } else {
+            String lowerCaseFilter = filterText.toLowerCase(); // Convertir el texto del filtro a minúsculas para comparación insensible a mayúsculas
+
+            // Filtrar las habitaciones basadas en el nombre del hotel
+            for (Room room : rooms) {
+                if (room.getHotel().getName().toLowerCase().contains(lowerCaseFilter)) {
+                    roomsTableVIew.getItems().add(room); // Agregar las habitaciones cuyo hotel coincide con el filtro
+                }
+            }
+        }
+    }
+
+
+    // Acción para cancelar
     @FXML
     public void cancelOnAction(ActionEvent actionEvent) {
     }
 
+    // Acción para eliminar habitación
     @FXML
     public void deleteRoomOnAction(ActionEvent actionEvent) {
         Room selectedRoom = roomsTableVIew.getSelectionModel().getSelectedItem();
@@ -166,29 +210,29 @@ public class RoomsManagmentController
         }
     }
 
+    // Actualiza la vista de la tabla de habitaciones
     private void updateTview() throws IOException, ClassNotFoundException {
         this.roomsTableVIew.getItems().clear();
-        Request request=new Request(Protocol.GET_ALL_ROOMS);
+        Request request = new Request(Protocol.GET_ALL_ROOMS);
         objectOutput.writeObject(request);
         objectOutput.flush();
-        rooms=(List<Room>) objectInput.readObject();
+        rooms = (List<Room>) objectInput.readObject();
         this.roomsTableVIew.getItems().addAll(rooms);
     }
 
+    // Acción para registrar habitación
     @FXML
     public void registerRoomOnAction(ActionEvent actionEvent) {
         int id = Integer.parseInt(roomIdTextField.getText());
         RoomType roomType = roomTypeComboBox.getSelectionModel().getSelectedItem();
         descriptionTextField.setText(roomType.getDescription());
-        roomCapacityTextField.setText(String.valueOf(roomType.getCapacity()));
-        String address=bedAmountTextField.getText();
+        String address = bedAmountTextField.getText();
         Hotel hotel = roomRegistrationHotelComboBox.getSelectionModel().getSelectedItem();
-        Room room=new Room(id,roomType,hotel,address);
+        Room room = new Room(id, roomType, hotel, address);
         try {
             objectOutput.flush(); // fuerza el encabezado del stream
 
-            Request request=new Request(Protocol.REGISTER_ROOM,room);
-
+            Request request = new Request(Protocol.REGISTER_ROOM, room);
             objectOutput.writeObject(request);
             objectOutput.flush();
 
@@ -201,22 +245,22 @@ public class RoomsManagmentController
                 }
             } else {
                 System.out.println("Respuesta inesperada del servidor.");
-
             }
+
             Request getRoomsRequest = new Request(Protocol.GET_ALL_ROOMS);
             objectOutput.writeObject(getRoomsRequest);
             objectOutput.flush();
 
-            rawResponse=objectInput.readObject();
+            rawResponse = objectInput.readObject();
             if (rawResponse instanceof Response response) {
-                Response response1 = (Response) rawResponse;
-                rooms=(List<Room>) response1.getData();
+                rooms = (List<Room>) response.getData();
             }
             updateTview();
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
     public void closeConnection() {
         try {
             if (objectOutput != null) objectOutput.close();
@@ -227,7 +271,7 @@ public class RoomsManagmentController
         }
     }
 
-    @FXML
+    @Deprecated
     public void filterRoomTView(ActionEvent actionEvent) {
         Hotel hotel= roomRegistrationHotelComboBox.getSelectionModel().getSelectedItem();
         if (hotel != null) {

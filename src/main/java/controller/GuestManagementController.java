@@ -95,6 +95,7 @@ public class GuestManagementController {
     private void updateTview() {
         this.guestTableView.getItems().clear();
         Request request = new Request(Protocol.GET_ALL_GUESTS);
+        this.guestTableView.getItems().clear();
         try {
             objectOutput.writeObject(request);
             objectOutput.flush();

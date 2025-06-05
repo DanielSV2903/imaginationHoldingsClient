@@ -4,20 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="55330825-95a2-465c-85d0-007405df562f" name="Changes" comment="Jerome Edison">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="55330825-95a2-465c-85d0-007405df562f" name="Changes" comment="propuesta hotelCard&#10;(se congela)">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/ClientBookingController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/ClientBookingController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/ClientViewController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/ClientViewController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/FrontDeskController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/FrontDeskController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/controller/GuestManagementController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/GuestManagementController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/LoginController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/MainViewController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/MainViewController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/MyBookingsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/MyBookingsController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/ReservationsManagmentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/ReservationsManagmentController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/imaginationholdingsclient/clientView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/imaginationholdingsclient/clientView.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/imaginationholdingsclient/front-desk.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/imaginationholdingsclient/front-desk.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/imaginationholdingsclient/login.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/imaginationholdingsclient/login.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/RoomsManagmentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/RoomsManagmentController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/imaginationholdingsclient/roomsManagment.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/imaginationholdingsclient/roomsManagment.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,8 +18,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="FxmlFile" />
         <option value="Class" />
+        <option value="FxmlFile" />
       </list>
     </option>
   </component>
@@ -55,27 +46,27 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.MainApp.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main",
-    "ignore.virus.scanning.warn.message": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/Lab01/Desktop/proyecto progra2/imaginationHoldingsClient",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Libraries",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "vcs.Subversion.SSH",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.MainApp.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/andre/Documents/GitHub/Proyecto Progra/Library/out/artifacts/imaginationHoldingsLibrary_jar/imaginationHoldingsLibrary.jar&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;vcs.Subversion.SSH&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration name="MainApp" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.imaginationholdingsclient.MainApp" />
@@ -95,6 +86,14 @@
         <item itemvalue="Application.MainApp" />
       </list>
     </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-a94e463ab2e7-intellij.indexing.shared.core-IU-243.26053.27" />
+        <option value="bundled-js-predefined-d6986cc7102b-1632447f56bf-JavaScript-IU-243.26053.27" />
+      </set>
+    </attachedChunks>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
@@ -189,31 +188,7 @@
       <option name="project" value="LOCAL" />
       <updated>1748990067861</updated>
     </task>
-    <task id="LOCAL-00010" summary="propuesta hotelCard&#10;(se congela)">
-      <option name="closed" value="true" />
-      <created>1749107851454</created>
-      <option name="number" value="00010" />
-      <option name="presentableId" value="LOCAL-00010" />
-      <option name="project" value="LOCAL" />
-      <updated>1749107851454</updated>
-    </task>
-    <task id="LOCAL-00011" summary="check Availability working&#10;Job DONE?">
-      <option name="closed" value="true" />
-      <created>1749108142269</created>
-      <option name="number" value="00011" />
-      <option name="presentableId" value="LOCAL-00011" />
-      <option name="project" value="LOCAL" />
-      <updated>1749108142269</updated>
-    </task>
-    <task id="LOCAL-00012" summary="check Availability working&#10;Job DONE?">
-      <option name="closed" value="true" />
-      <created>1749109060477</created>
-      <option name="number" value="00012" />
-      <option name="presentableId" value="LOCAL-00012" />
-      <option name="project" value="LOCAL" />
-      <updated>1749109060477</updated>
-    </task>
-    <option name="localTasksCounter" value="13" />
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -247,9 +222,7 @@
     <MESSAGE value="add guest pop Up" />
     <MESSAGE value="avances" />
     <MESSAGE value="propuesta hotelCard&#10;(se congela)" />
-    <MESSAGE value="check Availability working&#10;Job DONE?" />
-    <MESSAGE value="Jerome Edison" />
-    <option name="LAST_COMMIT_MESSAGE" value="Jerome Edison" />
+    <option name="LAST_COMMIT_MESSAGE" value="propuesta hotelCard&#10;(se congela)" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

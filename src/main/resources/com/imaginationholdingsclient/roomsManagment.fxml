@@ -31,16 +31,14 @@
                         <Font name="System Bold" size="18.0" />
                      </font>
                   </Text>
-                  <Text fill="#727272" layoutX="17.0" layoutY="117.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Habitación ID" />
-                  <TextField fx:id="roomIdTextField" layoutX="15.0" layoutY="121.0" prefHeight="25.0" prefWidth="174.0" />
-                  <Text fill="#727272" layoutX="199.0" layoutY="117.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tipo de Habitación" />
-                  <ComboBox fx:id="roomTypeComboBox" layoutX="199.0" layoutY="121.0" prefHeight="25.0" prefWidth="174.0" />
+                  <Text fill="#727272" layoutX="17.0" layoutY="139.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Habitación ID" />
+                  <TextField fx:id="roomIdTextField" layoutX="15.0" layoutY="143.0" prefHeight="25.0" prefWidth="174.0" />
+                  <Text fill="#727272" layoutX="199.0" layoutY="139.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tipo de Habitación" />
+                  <ComboBox fx:id="roomTypeComboBox" layoutX="199.0" layoutY="143.0" prefHeight="25.0" prefWidth="174.0" />
                   <Text fill="#727272" layoutX="15.0" layoutY="181.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Localizacion" />
                   <TextField fx:id="bedAmountTextField" layoutX="14.0" layoutY="184.0" prefHeight="25.0" prefWidth="100.0" />
                   <Text fill="#727272" layoutX="17.0" layoutY="64.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Habitación a Registrar en Hotel:" />
-                  <ComboBox fx:id="roomRegistrationHotelComboBox" layoutX="14.0" layoutY="68.0" prefHeight="25.0" prefWidth="360.0" />
-                  <Text fill="#727272" layoutX="121.0" layoutY="180.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Capacidad" />
-                  <TextField fx:id="roomCapacityTextField" layoutX="117.0" layoutY="183.0" prefHeight="25.0" prefWidth="64.0" />
+                  <ComboBox fx:id="roomRegistrationHotelComboBox" layoutX="14.0" layoutY="95.0" prefHeight="25.0" prefWidth="360.0" />
                   <Text fill="#727272" layoutX="15.0" layoutY="229.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Descripción (Opcional)" />
                   <TextField fx:id="descriptionTextField" layoutX="14.0" layoutY="232.0" prefHeight="68.0" prefWidth="360.0" />
                   <Button layoutX="192.0" layoutY="323.0" mnemonicParsing="false" onAction="#registerRoomOnAction" prefHeight="30.0" prefWidth="181.0" text="Registrar Habitación">
@@ -53,11 +51,12 @@
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Button>
+                  <TextField fx:id="filterHotel" layoutX="15.0" layoutY="67.0" prefHeight="25.0" prefWidth="360.0" />
                </children>
             </Pane>
-            <ScrollPane layoutX="449.0" layoutY="165.0" prefHeight="280.0" prefWidth="368.0">
+            <ScrollPane layoutX="449.0" layoutY="172.0" prefHeight="273.0" prefWidth="368.0">
                <content>
-                  <TableView fx:id="roomsTableVIew" prefHeight="286.0" prefWidth="368.0">
+                  <TableView fx:id="roomsTableVIew" prefHeight="279.0" prefWidth="368.0">
                     <columns>
                       <TableColumn fx:id="hotelCol" prefWidth="75.0" text="Hotel" />
                       <TableColumn fx:id="idCol" prefWidth="75.0" text="ID" />
@@ -67,17 +66,17 @@
                   </TableView>
                </content>
             </ScrollPane>
-            <Pane layoutX="449.0" layoutY="57.0" prefHeight="98.0" prefWidth="368.0" style="-fx-background-color: #ffffff;">
+            <Pane layoutX="449.0" layoutY="57.0" prefHeight="105.0" prefWidth="368.0" style="-fx-background-color: #ffffff;">
                <children>
                   <Text fill="#727272" layoutX="17.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Seleccionar Hotel" />
-                  <ComboBox fx:id="selectHotelComboBox" layoutX="17.0" layoutY="59.0" onAction="#filterRoomTView" prefHeight="25.0" prefWidth="174.0" />
                   <Button layoutX="233.0" layoutY="59.0" mnemonicParsing="false" onAction="#deleteRoomOnAction" text="Eliminar Habitación" />
                   <Text layoutX="17.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Acciones">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>
                   </Text>
-                  <Button layoutX="233.0" layoutY="30.0" mnemonicParsing="false" onAction="#editRoomOnAction" text="Editar Habitación" />
+                  <Button layoutX="233.0" layoutY="30.0" mnemonicParsing="false" onAction="#editRoomOnAction" prefHeight="25.0" prefWidth="119.0" text="Editar Habitación" />
+                  <TextField fx:id="filterHotelRoom" layoutX="17.0" layoutY="59.0" prefHeight="25.0" prefWidth="205.0" />
                </children>
             </Pane>
          </children>
