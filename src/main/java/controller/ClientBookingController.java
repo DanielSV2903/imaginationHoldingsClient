@@ -61,7 +61,6 @@ public class ClientBookingController {
             Request request = new Request(Protocol.GET_BOOKINGS);
             objectOutput.writeObject(request);
             objectOutput.flush();
-
             bookings= (List<Booking>) objectInput.readObject();
 
             request=new Request(Protocol.GET_ALL_HOTELS);

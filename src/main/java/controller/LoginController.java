@@ -3,11 +3,13 @@ package controller;
 import com.imaginationHoldings.domain.Guest;
 import com.imaginationHoldings.protocol.Protocol;
 import com.imaginationHoldings.protocol.Request;
+import com.imaginationHoldings.protocol.Response;
 import com.imaginationHoldings.protocol.UserRole;
 import com.imaginationholdingsclient.MainApp;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
@@ -17,6 +19,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.time.LocalDate;
 import java.util.List;
 
 public class LoginController
@@ -57,6 +60,25 @@ public class LoginController
                 if (guest.getId() == id) {
                     role = UserRole.CLIENT;
                     userName = String.valueOf(guest.getId()); // guarda el ID como nombre
+                }
+            }
+            if (!guests.contains(new Guest(id))){
+                Guest guest=new Guest(id);
+                String birth= String.valueOf(LocalDate.of(2005,1,1));
+                String command = String.format("ADD_GUEST|%s|%s|%s|%d|%s", "", "", "", id,birth);
+                request=new Request(Protocol.ADD_GUEST,command);
+                out.writeObject(request);
+                out.flush();
+
+                Object rawResponse = in.readObject();
+                Response response=new Response((String) rawResponse);
+                System.out.println("Servidor: " + response.getCommand());
+                if (response.getCommand().equals(Response.GUEST_REGISTERED)) {
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Huésped Registrado");
+                    alert.setHeaderText("Huésped Registrado Exitosamente");
+                    alert.setContentText("El huésped ha sido registrado correctamente.");
+                    alert.showAndWait();
                 }
             }
             loadClientView();

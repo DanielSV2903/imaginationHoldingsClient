@@ -82,7 +82,10 @@ public class GuestManagementController {
             // Envolver en SortedList y enlazar con la TableView
             sortedGuests = new SortedList<>(filteredGuests);
             sortedGuests.comparatorProperty().bind(guestTableView.comparatorProperty());
-            guestTableView.setItems(sortedGuests);
+            for (Guest g:sortedGuests){
+                guestTableView.getItems().add(g);
+            }
+
 
         } catch (IOException | ClassNotFoundException e) {
             throw new RuntimeException(e);
@@ -90,6 +93,7 @@ public class GuestManagementController {
     }
 
     private void updateTview() {
+        this.guestTableView.getItems().clear();
         Request request = new Request(Protocol.GET_ALL_GUESTS);
         try {
             objectOutput.writeObject(request);

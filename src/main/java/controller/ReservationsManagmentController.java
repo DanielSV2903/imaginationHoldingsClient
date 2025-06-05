@@ -127,12 +127,12 @@ public class ReservationsManagmentController
         reservationsTableView.setItems(sortedBookings);
     }
     private void updateTview() throws IOException, ClassNotFoundException {
-        //this.reservationsTableView.getItems().clear();
+        this.reservationsTableView.getItems().clear();
         Request request=new Request(Protocol.GET_BOOKINGS);
         objectOutput.writeObject(request);
         objectOutput.flush();
         bookings=(List<Booking>) objectInput.readObject();
-        bookings = (List<Booking>) objectInput.readObject();
+//        bookings = (List<Booking>) objectInput.readObject();
         filteredBookings.setAll(bookings);
 
     }

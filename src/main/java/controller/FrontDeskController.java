@@ -110,7 +110,7 @@ public class FrontDeskController {
         bp.setCenter(view);
     }
 
-    @javafx.fxml.FXML
+    @Deprecated
     public void editHotelOnAction(ActionEvent actionEvent) {
     }
 
@@ -121,6 +121,21 @@ public class FrontDeskController {
             FXMLLoader fxmlLoader = new FXMLLoader(MainApp.class.getResource("manageGuest.fxml"));
             Parent view = fxmlLoader.load();
             bp.setCenter(view);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @javafx.fxml.FXML
+    public void logOutOnAction(ActionEvent actionEvent) {
+        try {
+            FXMLLoader loader=new FXMLLoader(MainApp.class.getResource("login.fxml"));
+            Parent loginView=loader.load();
+            Stage stage = (Stage) bp.getScene().getWindow();
+            Scene loginScene = new Scene(loginView);
+            stage.setScene(loginScene);
+            stage.setTitle("Hotel Client - Login");
+            stage.show();
         } catch (IOException e) {
             e.printStackTrace();
         }

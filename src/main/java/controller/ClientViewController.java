@@ -6,6 +6,7 @@ import com.imaginationHoldings.protocol.Protocol;
 import com.imaginationHoldings.protocol.Request;
 import com.imaginationholdingsclient.MainApp;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -128,5 +129,21 @@ public class ClientViewController
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @javafx.fxml.FXML
+    public void logOutOnAction(ActionEvent actionEvent) {
+        try {
+            if (this.out != null) out.close();
+            if (this.in != null) in.close();
+            if (socket != null && !socket.isClosed()) socket.close();
+
+            FXMLLoader loader=new FXMLLoader(MainApp.class.getResource("login.fxml"));
+            Parent p=loader.load();
+            bp.setCenter(p);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 }

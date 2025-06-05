@@ -4,14 +4,20 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="55330825-95a2-465c-85d0-007405df562f" name="Changes" comment="propuesta hotelCard&#10;(se congela)">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+    <list default="true" id="55330825-95a2-465c-85d0-007405df562f" name="Changes" comment="Jerome Edison">
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/ClientBookingController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/ClientBookingController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/ClientViewController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/ClientViewController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/FrontDeskController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/FrontDeskController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/controller/GuestManagementController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/GuestManagementController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/HotelManagmentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/HotelManagmentController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/imaginationholdingsclient/hotelManagment.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/imaginationholdingsclient/hotelManagment.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/imaginationholdingsclient/manageGuest.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/imaginationholdingsclient/manageGuest.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/LoginController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/MainViewController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/MainViewController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/MyBookingsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/MyBookingsController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/ReservationsManagmentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/ReservationsManagmentController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/imaginationholdingsclient/clientView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/imaginationholdingsclient/clientView.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/imaginationholdingsclient/front-desk.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/imaginationholdingsclient/front-desk.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/imaginationholdingsclient/login.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/imaginationholdingsclient/login.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -21,8 +27,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="FxmlFile" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -35,12 +41,12 @@
     &quot;assignee&quot;: &quot;chocol3it&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/DanielSV2903/imaginationHoldingsClient.git",
-    "accountId": "72ca0cd9-c338-45df-908f-c7fbb70e4ecf"
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/DanielSV2903/imaginationHoldingsClient.git&quot;,
+    &quot;accountId&quot;: &quot;72ca0cd9-c338-45df-908f-c7fbb70e4ecf&quot;
   }
-}]]></component>
+}</component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 6
 }</component>
@@ -57,7 +63,7 @@
     "git-widget-placeholder": "main",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/andre/Documents/GitHub/Proyecto Progra/Library/out/artifacts/imaginationHoldingsLibrary_jar/imaginationHoldingsLibrary.jar",
+    "last_opened_file_path": "C:/Users/Lab01/Desktop/proyecto progra2/imaginationHoldingsClient",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -89,14 +95,6 @@
         <item itemvalue="Application.MainApp" />
       </list>
     </recent_temporary>
-  </component>
-  <component name="SharedIndexes">
-    <attachedChunks>
-      <set>
-        <option value="bundled-jdk-9823dce3aa75-a94e463ab2e7-intellij.indexing.shared.core-IU-243.26053.27" />
-        <option value="bundled-js-predefined-d6986cc7102b-1632447f56bf-JavaScript-IU-243.26053.27" />
-      </set>
-    </attachedChunks>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
@@ -191,7 +189,31 @@
       <option name="project" value="LOCAL" />
       <updated>1748990067861</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="propuesta hotelCard&#10;(se congela)">
+      <option name="closed" value="true" />
+      <created>1749107851454</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1749107851454</updated>
+    </task>
+    <task id="LOCAL-00011" summary="check Availability working&#10;Job DONE?">
+      <option name="closed" value="true" />
+      <created>1749108142269</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1749108142269</updated>
+    </task>
+    <task id="LOCAL-00012" summary="check Availability working&#10;Job DONE?">
+      <option name="closed" value="true" />
+      <created>1749109060477</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1749109060477</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -225,7 +247,9 @@
     <MESSAGE value="add guest pop Up" />
     <MESSAGE value="avances" />
     <MESSAGE value="propuesta hotelCard&#10;(se congela)" />
-    <option name="LAST_COMMIT_MESSAGE" value="propuesta hotelCard&#10;(se congela)" />
+    <MESSAGE value="check Availability working&#10;Job DONE?" />
+    <MESSAGE value="Jerome Edison" />
+    <option name="LAST_COMMIT_MESSAGE" value="Jerome Edison" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
