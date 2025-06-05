@@ -16,13 +16,12 @@ import javafx.scene.layout.GridPane;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 public class RoomsManagmentController
 {
-    @FXML
-    private TextField pricePerNightTextField;
     @FXML
     private TextField roomCapacityTextField;
     @FXML
@@ -52,9 +51,13 @@ public class RoomsManagmentController
     @FXML
     private TableColumn<Room,String> hotelCol;
     private final String SERVER_IP="10.59.18.238";
+    @FXML
+    private TableColumn<Room,String> locationCol;
 
     @FXML
     public void initialize() {
+        hotels=new ArrayList<>();
+        rooms=new ArrayList<>();
         try {
             socket = new Socket(MainViewController.SERVER_IP, MainViewController.PORT);
             objectOutput = new ObjectOutputStream(socket.getOutputStream());
@@ -86,6 +89,8 @@ public class RoomsManagmentController
             for (RoomType roomType : RoomType.values()) {
                 roomTypeComboBox.getItems().add(roomType);
             }
+            locationCol.setCellValueFactory(celLData->
+                    new SimpleStringProperty(celLData.getValue().getLocation()));
             hotelCol.setCellValueFactory(cellData ->
                     new SimpleStringProperty(cellData.getValue().getHotel().getName()));
 
@@ -169,17 +174,6 @@ public class RoomsManagmentController
         rooms=(List<Room>) objectInput.readObject();
         this.roomsTableVIew.getItems().addAll(rooms);
     }
-    private void filterTView(){
-        Hotel hotel= roomRegistrationHotelComboBox.getSelectionModel().getSelectedItem();
-        if (hotel != null) {
-            this.roomsTableVIew.getItems().clear();
-        for (Room room : rooms) {
-            if (room.getHotel().getId()==hotel.getId()) {
-                this.roomsTableVIew.getItems().add(room);
-            }
-        }
-        }
-    }
 
     @FXML
     public void registerRoomOnAction(ActionEvent actionEvent) {
@@ -235,7 +229,15 @@ public class RoomsManagmentController
 
     @FXML
     public void filterRoomTView(ActionEvent actionEvent) {
-        filterTView();
+        Hotel hotel= roomRegistrationHotelComboBox.getSelectionModel().getSelectedItem();
+        if (hotel != null) {
+            this.roomsTableVIew.getItems().clear();
+            for (Room room : rooms) {
+                if (room.getHotel().getId()==hotel.getId()) {
+                    this.roomsTableVIew.getItems().add(room);
+                }
+            }
+        }
     }
 
     @FXML
@@ -300,7 +302,8 @@ public class RoomsManagmentController
                 objectOutput.flush();
 
                 Object responseObj = objectInput.readObject();
-                if (responseObj instanceof Response response && "ROOM_UPDATED".equals(response.getCommand())) {
+                Response response=(Response) responseObj;
+                if (response.getCommand().equals(Response.ROOM_UPDATED)) {
                     Alert confirmation = new Alert(Alert.AlertType.INFORMATION);
                     confirmation.setTitle("Success");
                     confirmation.setHeaderText(null);

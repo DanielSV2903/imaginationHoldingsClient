@@ -5,21 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="55330825-95a2-465c-85d0-007405df562f" name="Changes" comment="propuesta hotelCard&#10;(se congela)">
-      <change afterPath="$PROJECT_DIR$/src/main/java/controller/HotelCardViewController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/controller/RoomCardController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/com/imaginationholdingsclient/hotelCardView.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/com/imaginationholdingsclient/roomCard.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/imaginationholdingsclient/MainApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/imaginationholdingsclient/MainApp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/ClientViewController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/ClientViewController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/controller/FrontDeskController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/FrontDeskController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/GuestManagementController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/GuestManagementController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/HotelCardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/HotelCardController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/controller/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/LoginController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/MainViewController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/MainViewController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/controller/ReservationsManagmentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/ReservationsManagmentController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/imaginationholdingsclient/front-desk.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/imaginationholdingsclient/front-desk.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/imaginationholdingsclient/manageGuest.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/imaginationholdingsclient/manageGuest.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/RoomsManagmentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/RoomsManagmentController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/imaginationholdingsclient/reservationsManagment.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/imaginationholdingsclient/reservationsManagment.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/imaginationholdingsclient/roomsManagment.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/imaginationholdingsclient/roomsManagment.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,27 +49,28 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.MainApp.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/DanielSV/Documents/2025/proyecto progra2/imaginationHoldingsClient&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;vcs.Subversion.SSH&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.MainApp.executor": "Debug",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
+    "jdk.selected.JAVA_MODULE": "openjdk-23",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/DanielSV/Documents/2025/proyecto progra2/imaginationHoldingsLibrary/out/artifacts/imaginationHoldingsLibrary_jar/imaginationHoldingsLibrary.jar",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Libraries",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "vcs.Subversion.SSH",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RunManager">
     <configuration name="MainApp" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.imaginationholdingsclient.MainApp" />
@@ -254,6 +247,15 @@
             <option name="lambda-ordinal" value="-1" />
           </properties>
           <option name="timeStamp" value="5" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/main/java/controller/FrontDeskController.java</url>
+          <line>101</line>
+          <properties class="controller.FrontDeskController" method="deleteRooms">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="11" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
