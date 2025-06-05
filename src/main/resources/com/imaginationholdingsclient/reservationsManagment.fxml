@@ -33,10 +33,10 @@
                   </Text>
                   <Text fill="#808080" layoutX="26.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nombre del Huésped" />
                   <TextField fx:id="guestNameTextField" layoutX="26.0" layoutY="59.0" prefHeight="25.0" prefWidth="316.0" />
-                  <Text fill="#808080" layoutX="26.0" layoutY="109.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Fecha de Entrada" />
-                  <DatePicker fx:id="entryDatePicker" layoutX="26.0" layoutY="113.0" prefHeight="25.0" prefWidth="143.0" />
-                  <Text fill="#808080" layoutX="208.0" layoutY="108.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Fecha de Entrada" />
-                  <DatePicker fx:id="exitDatePicker" layoutX="199.0" layoutY="113.0" prefHeight="25.0" prefWidth="143.0" />
+                  <Text fill="#808080" layoutX="17.0" layoutY="113.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Fecha de Entrada" />
+                  <DatePicker fx:id="entryDatePicker" layoutX="17.0" layoutY="117.0" prefHeight="25.0" prefWidth="143.0" />
+                  <Text fill="#808080" layoutX="26.0" layoutY="163.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Fecha de Salida" />
+                  <DatePicker fx:id="exitDatePicker" layoutX="17.0" layoutY="168.0" prefHeight="25.0" prefWidth="143.0" />
                   <Text fill="#808080" layoutX="387.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Identificacion/Pasaporte" />
                   <TextField fx:id="guestMailTextField" layoutX="387.0" layoutY="59.0" prefHeight="25.0" prefWidth="316.0" />
                   <Text fill="#808080" layoutX="387.0" layoutY="105.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Número de Huespedes" />
@@ -45,13 +45,16 @@
                   <ComboBox fx:id="roomTypeComboBox" layoutX="551.0" layoutY="113.0" prefWidth="150.0" />
                   <Button layoutX="551.0" layoutY="159.0" mnemonicParsing="false" onAction="#createReservationsOnAction" prefHeight="25.0" prefWidth="150.0" text="Crear Reservación" />
                   <Button layoutX="388.0" layoutY="159.0" mnemonicParsing="false" onAction="#cancelOnAction" prefHeight="25.0" prefWidth="143.0" text="Cancelar" />
+                  <ComboBox fx:id="cBoxHotel" layoutX="224.0" layoutY="113.0" prefWidth="150.0" />
+                  <Text fill="#808080" layoutX="224.0" layoutY="105.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Hotel" />
                </children>
             </Pane>
             <TableView fx:id="reservationsTableView" layoutX="14.0" layoutY="296.0" prefHeight="200.0" prefWidth="572.0">
               <columns>
                 <TableColumn fx:id="guestCol" prefWidth="75.0" text="Huésped" />
                 <TableColumn fx:id="roomCol" prefWidth="75.0" text="Habitación" />
-                  <TableColumn fx:id="checkIn" prefWidth="75.0" text="Entrada" />
+                  <TableColumn fx:id="hotelCol" prefWidth="83.0" text="Hotel" />
+                  <TableColumn fx:id="checkIn" prefWidth="67.0" text="Entrada" />
                   <TableColumn fx:id="checkOut" prefWidth="75.0" text="Salida" />
               </columns>
             </TableView>
@@ -63,7 +66,7 @@
                      </font>
                   </Text>
                   <Button layoutX="14.0" layoutY="49.0" mnemonicParsing="false" onAction="#deleteReservationOnAction" text="Eliminar Reservación" />
-                  <Button layoutX="14.0" layoutY="88.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="125.0" text="Generar Reporte" />
+                  <Button layoutX="14.0" layoutY="88.0" mnemonicParsing="false" onAction="#editOnAction" prefHeight="25.0" prefWidth="125.0" text="Editar reservacion" />
                </children>
             </Pane>
          </children>

@@ -39,10 +39,8 @@
                   <TextField fx:id="bedAmountTextField" layoutX="14.0" layoutY="184.0" prefHeight="25.0" prefWidth="100.0" />
                   <Text fill="#727272" layoutX="17.0" layoutY="64.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Habitación a Registrar en Hotel:" />
                   <ComboBox fx:id="roomRegistrationHotelComboBox" layoutX="14.0" layoutY="68.0" prefHeight="25.0" prefWidth="360.0" />
-                  <Text fill="#727272" layoutX="131.0" layoutY="181.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Precio por noche" />
-                  <TextField fx:id="pricePerNightTextField" layoutX="131.0" layoutY="184.0" prefHeight="25.0" prefWidth="121.0" />
-                  <Text fill="#727272" layoutX="265.0" layoutY="181.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Capacidad" />
-                  <TextField fx:id="roomCapacityTextField" layoutX="265.0" layoutY="183.0" prefHeight="25.0" prefWidth="64.0" />
+                  <Text fill="#727272" layoutX="121.0" layoutY="180.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Capacidad" />
+                  <TextField fx:id="roomCapacityTextField" layoutX="117.0" layoutY="183.0" prefHeight="25.0" prefWidth="64.0" />
                   <Text fill="#727272" layoutX="15.0" layoutY="229.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Descripción (Opcional)" />
                   <TextField fx:id="descriptionTextField" layoutX="14.0" layoutY="232.0" prefHeight="68.0" prefWidth="360.0" />
                   <Button layoutX="192.0" layoutY="323.0" mnemonicParsing="false" onAction="#registerRoomOnAction" prefHeight="30.0" prefWidth="181.0" text="Registrar Habitación">
@@ -64,7 +62,7 @@
                       <TableColumn fx:id="hotelCol" prefWidth="75.0" text="Hotel" />
                       <TableColumn fx:id="idCol" prefWidth="75.0" text="ID" />
                         <TableColumn fx:id="roomTypeCol" prefWidth="75.0" text="Tipo de Habitación" />
-                        <TableColumn prefWidth="75.0" text="Precio" />
+                        <TableColumn fx:id="locationCol" prefWidth="75.0" text="Ubicacion" />
                     </columns>
                   </TableView>
                </content>

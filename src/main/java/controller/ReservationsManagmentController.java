@@ -10,6 +10,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.GridPane;
 
 import java.io.*;
 import java.net.Socket;
@@ -43,34 +44,58 @@ public class ReservationsManagmentController
     @javafx.fxml.FXML
     private TableColumn<Booking,String> guestCol;
     private List<Booking> bookings;
+    private List<Room> rooms;
     private Socket socket;
     private ObjectOutputStream objectOutput;
     private ObjectInputStream objectInput;
     private Hotel hotel;
+    private List<Hotel> hotels;
     private final String SERVER_IP="10.59.18.238";
+    @javafx.fxml.FXML
+    private ComboBox<Hotel> cBoxHotel;
+    @javafx.fxml.FXML
+    private TableColumn<Booking,String> hotelCol;
 
     @javafx.fxml.FXML
     public void initialize() {
         bookings = new ArrayList<>();
+        rooms = new ArrayList<>();
+        hotels = new ArrayList<>();
         try {
              socket = new Socket(MainViewController.SERVER_IP, MainViewController.PORT);
              objectOutput = new ObjectOutputStream(socket.getOutputStream());
             objectOutput.flush(); // fuerza el encabezado del stream
              objectInput = new ObjectInputStream(socket.getInputStream());
+
             Request request = new Request(Protocol.GET_BOOKINGS);
             objectOutput.writeObject(request);
             objectOutput.flush();
+
             bookings= (List<Booking>) objectInput.readObject();
+
+            request=new Request(Protocol.GET_ALL_HOTELS);
+            objectOutput.writeObject(request);
+            objectOutput.flush();
+            hotels = (List<Hotel>) objectInput.readObject();
+            request=new Request(Protocol.GET_ALL_ROOMS);
+            objectOutput.writeObject(request);
+            objectOutput.flush();
+            rooms=(List<Room>) objectInput.readObject();
+
         } catch (IOException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
         for (RoomType roomType : RoomType.values()) {
             roomTypeComboBox.getItems().add(roomType);
         }
+        for (Hotel hotel : hotels) {
+            cBoxHotel.getItems().add(hotel);
+        }
         guestCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getGuest().getId()+""));
         roomCol.setCellValueFactory(cellData ->new SimpleStringProperty(cellData.getValue().getRoom().getRoomNumber()+""));
         checkIn.setCellValueFactory(cellData ->new SimpleStringProperty(cellData.getValue().getStayPeriod().getCheckInDate().toString()));
         checkOut.setCellValueFactory(cellData ->new SimpleStringProperty(cellData.getValue().getStayPeriod().getCheckOutDate().toString()));
+        hotelCol.setCellValueFactory(cellData->new SimpleStringProperty(String.valueOf(cellData.getValue().getRoom().getHotel().getId())));
 
         reservationsTableView.getItems().addAll(bookings);
     }
@@ -126,15 +151,17 @@ public class ReservationsManagmentController
         String checkOutDate = exitDatePicker.getValue().toString();
         String roomType = roomTypeComboBox.getValue().getDescription();
         int guestsAmount = Integer.parseInt(guestAmountTextField.getText());
+        int hotelID=cBoxHotel.getSelectionModel().getSelectedItem().getId();
 //
 //         socket = new Socket("localhost", 5000);
 //             objectOutput = new ObjectOutputStream(socket.getOutputStream());
 //            objectOutput.flush(); // fuerza el encabezado del stream
 //              objectInput = new ObjectInputStream(socket.getInputStream());
 
-        String command = String.format("1|%s|%s|%s|%s|%d|%s|%d", guestName[0],guestName[1], entryDate, checkOutDate,id,roomType,guestsAmount);
+        String command = String.format("1|%s|%s|%s|%s|%d|%s|%d|%d", guestName[0],guestName[1], entryDate, checkOutDate,id,roomType,guestsAmount,hotelID);
             Request request = new Request(Protocol.RESERVE_ROOM,command);
         objectOutput.writeObject(request);
+        objectOutput.flush();
 
         Object rawresponse = objectInput.readObject();
         Response response = (Response) rawresponse;
@@ -247,5 +274,77 @@ public class ReservationsManagmentController
 
     public void setHotel(Hotel hotel) {
         this.hotel = hotel;
+    }
+
+    @javafx.fxml.FXML
+    public void editOnAction(ActionEvent actionEvent) {
+        Booking selected=this.reservationsTableView.getSelectionModel().getSelectedItem();
+
+        if (selected == null) {
+            Alert alert = new Alert(Alert.AlertType.WARNING, "Seleccione una reservacion primero.");
+            alert.showAndWait();
+            return;
+        }
+        GridPane gp = new GridPane();
+        TextField tfGuestAmount = new TextField(String.valueOf(selected.getGuestAmount()));
+        TextField tfID = new TextField(String.valueOf(selected.getGuest().getId()));
+        tfID.setEditable(false);
+        TextField tfRoom = new TextField(String.valueOf(selected.getRoom().getRoomNumber()));
+        DatePicker checkInDP = new DatePicker();
+        DatePicker checkOutDP = new DatePicker();
+        if (selected.getStayPeriod() != null){
+            checkInDP.setValue(selected.getStayPeriod().getCheckInDate());
+            checkOutDP.setValue(selected.getStayPeriod().getCheckOutDate());
+        }
+
+        gp.setHgap(10);
+        gp.setVgap(10);
+        gp.add(new Label("Nombre:"), 0, 0); gp.add(tfID, 1, 0);
+        gp.add(new Label("cantdiad de huespedes:"), 0, 1); gp.add(tfGuestAmount, 1, 1);
+        gp.add(new Label("Cuarto:"), 0, 2); gp.add(tfRoom, 1, 2);
+        gp.add(new Label("Check in:"), 0, 3); gp.add(checkInDP, 1, 3);
+        gp.add(new Label("Check in:"), 0, 3); gp.add(checkOutDP, 1, 4);
+
+
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Editar reservacion");
+        alert.setHeaderText("¿Desea guardar los cambios?");
+        alert.getDialogPane().setContent(gp);
+        alert.showAndWait().ifPresent(response -> {
+            if (response == ButtonType.OK) {
+                if (tfID.getText().isEmpty() || tfGuestAmount.getText().isEmpty() || checkInDP.getValue() == null
+                        ||checkInDP.getValue() == null) {
+                    Alert errorAlert = new Alert(Alert.AlertType.ERROR, "Todos los campos son obligatorios.");
+                    errorAlert.showAndWait();
+                    return;
+                }
+                LocalDate checkIn = checkInDP.getValue();
+                LocalDate checkOut = checkOutDP.getValue();
+                selected.setGuestAmount(Integer.parseInt(tfGuestAmount.getText()));
+                selected.setRoom(new Room(Integer.parseInt(tfRoom.getText())));
+                selected.setStayPeriod(new StayPeriod(checkIn, checkOut));
+            }
+        });
+        Request request=new Request(Protocol.EDIT_RESERVATION,selected);
+        try {
+            objectOutput.writeObject(request);
+            objectOutput.flush();
+            Object rawResponse=objectInput.readObject();
+            Response response=(Response) rawResponse;
+            if (response.getCommand().equals(Response.BOOKING_DONE)){
+                alert=new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Booking Status");
+                alert.setContentText("Booking updated successfully.");
+                alert.showAndWait();
+            }else {
+                alert=new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Guest Status");
+                alert.setContentText("Booking was not updated");
+                alert.showAndWait();
+            }
+            updateTview();
+        } catch (IOException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

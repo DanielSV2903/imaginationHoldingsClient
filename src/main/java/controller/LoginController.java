@@ -37,7 +37,7 @@ public class LoginController
             case "admin" -> role = UserRole.ADMIN;
             case "user" -> role = UserRole.CLIENT;
             case "front desk" -> role = UserRole.FRONTDESK;
-            default -> role = null;
+            default -> role = UserRole.FRONTDESK;
         }
         switch (role){
             case ADMIN -> {}

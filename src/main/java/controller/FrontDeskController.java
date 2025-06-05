@@ -100,6 +100,14 @@ public class FrontDeskController {
 
     @javafx.fxml.FXML
     public void deleteRooms(ActionEvent actionEvent) {
+            FXMLLoader fxmlLoader = new FXMLLoader(MainApp.class.getResource("deleteRoom.fxml"));
+        Parent view = null;
+        try {
+            view = fxmlLoader.load();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        bp.setCenter(view);
     }
 
     @javafx.fxml.FXML

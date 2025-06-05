@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane fx:id="bp" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.DeleteRoomController">
+   <center>
+      <AnchorPane prefHeight="459.0" prefWidth="159.0">
+         <children>
+            <Pane prefHeight="459.0" prefWidth="377.0" style="-fx-background-color: #FFFF;">
+               <children>
+                  <Pane prefHeight="48.0" prefWidth="379.0" style="-fx-background-color: #002db8;">
+                     <children>
+                        <Text fill="WHITE" layoutX="23.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Gestión de Habitaciones">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font>
+                        </Text>
+                     </children>
+                  </Pane>
+                  <ScrollPane layoutY="152.0" prefHeight="280.0" prefWidth="368.0">
+                     <content>
+                        <TableView fx:id="roomsTableVIew" prefHeight="286.0" prefWidth="368.0">
+                          <columns>
+                            <TableColumn fx:id="hotelCol" prefWidth="75.0" text="Hotel" />
+                            <TableColumn fx:id="idCol" prefWidth="75.0" text="ID" />
+                              <TableColumn fx:id="roomTypeCol" prefWidth="75.0" text="Tipo de Habitación" />
+                              <TableColumn fx:id="locationCol" prefWidth="75.0" text="Ubicacion" />
+                          </columns>
+                        </TableView>
+                     </content>
+                  </ScrollPane>
+                  <Pane layoutY="48.0" prefHeight="98.0" prefWidth="377.0" style="-fx-background-color: #ffffff;">
+                     <children>
+                        <Text fill="#727272" layoutX="17.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Seleccionar Hotel" />
+                        <ComboBox fx:id="selectHotelComboBox" layoutX="17.0" layoutY="59.0" onAction="#filterRoomTView" prefHeight="25.0" prefWidth="174.0" />
+                        <Button layoutX="233.0" layoutY="59.0" mnemonicParsing="false" onAction="#deleteRoomOnAction" text="Eliminar Habitación" />
+                        <Text layoutX="17.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Acciones">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font>
+                        </Text>
+                        <Button layoutX="233.0" layoutY="30.0" mnemonicParsing="false" onAction="#editRoomOnAction" text="Editar Habitación" />
+                     </children>
+                  </Pane>
+               </children>
+            </Pane>
+         </children>
+      </AnchorPane>
+   </center>
+</BorderPane>
