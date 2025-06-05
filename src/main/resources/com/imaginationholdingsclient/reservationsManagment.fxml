@@ -49,7 +49,7 @@
                   <Text fill="#808080" layoutX="224.0" layoutY="105.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Hotel" />
                </children>
             </Pane>
-            <TableView fx:id="reservationsTableView" layoutX="14.0" layoutY="296.0" prefHeight="200.0" prefWidth="572.0">
+            <TableView fx:id="reservationsTableView" layoutX="14.0" layoutY="296.0" prefHeight="200.0" prefWidth="425.0">
               <columns>
                 <TableColumn fx:id="guestCol" prefWidth="75.0" text="Huésped" />
                 <TableColumn fx:id="roomCol" prefWidth="75.0" text="Habitación" />
@@ -58,7 +58,7 @@
                   <TableColumn fx:id="checkOut" prefWidth="75.0" text="Salida" />
               </columns>
             </TableView>
-            <Pane layoutX="600.0" layoutY="296.0" prefHeight="200.0" prefWidth="150.0" style="-fx-background-color: #ffffff;">
+            <Pane layoutX="459.0" layoutY="296.0" prefHeight="200.0" prefWidth="291.0" style="-fx-background-color: #ffffff;">
                <children>
                   <Text layoutX="14.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Acciones">
                      <font>
@@ -66,7 +66,13 @@
                      </font>
                   </Text>
                   <Button layoutX="14.0" layoutY="49.0" mnemonicParsing="false" onAction="#deleteReservationOnAction" text="Eliminar Reservación" />
-                  <Button layoutX="14.0" layoutY="88.0" mnemonicParsing="false" onAction="#editOnAction" prefHeight="25.0" prefWidth="125.0" text="Editar reservacion" />
+                  <Button layoutX="152.0" layoutY="49.0" mnemonicParsing="false" onAction="#editOnAction" prefHeight="25.0" prefWidth="125.0" text="Editar reservacion" />
+                  <Text layoutX="17.0" layoutY="105.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Buscar">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Text>
+                  <TextField fx:id="filterText" layoutX="14.0" layoutY="119.0" prefHeight="25.0" prefWidth="262.0" />
                </children>
             </Pane>
          </children>

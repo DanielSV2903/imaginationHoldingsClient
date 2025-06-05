@@ -7,6 +7,9 @@ import com.imaginationHoldings.protocol.Response;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -55,6 +58,9 @@ public class ReservationsManagmentController
     private ComboBox<Hotel> cBoxHotel;
     @javafx.fxml.FXML
     private TableColumn<Booking,String> hotelCol;
+    @javafx.fxml.FXML
+    private TextField filterText;
+    private FilteredList<Booking> filteredBookings;
 
     @javafx.fxml.FXML
     public void initialize() {
@@ -97,17 +103,38 @@ public class ReservationsManagmentController
         checkOut.setCellValueFactory(cellData ->new SimpleStringProperty(cellData.getValue().getStayPeriod().getCheckOutDate().toString()));
         hotelCol.setCellValueFactory(cellData->new SimpleStringProperty(String.valueOf(cellData.getValue().getRoom().getHotel().getId())));
 
-        reservationsTableView.getItems().addAll(bookings);
+        filteredBookings = new FilteredList<>(FXCollections.observableArrayList(bookings), b -> true);
+
+        filterText.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredBookings.setPredicate(booking -> {
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+
+                String lowerCaseFilter = newValue.toLowerCase();
+
+                return String.valueOf(booking.getGuest().getId()).contains(lowerCaseFilter)
+                        || String.valueOf(booking.getRoom().getRoomNumber()).toLowerCase().contains(lowerCaseFilter)
+                        || booking.getStayPeriod().getCheckInDate().toString().contains(lowerCaseFilter)
+                        || booking.getStayPeriod().getCheckOutDate().toString().contains(lowerCaseFilter)
+                        || String.valueOf(booking.getRoom().getHotel().getId()).contains(lowerCaseFilter);
+            });
+        });
+
+        SortedList<Booking> sortedBookings = new SortedList<>(filteredBookings);
+        sortedBookings.comparatorProperty().bind(reservationsTableView.comparatorProperty());
+
+        reservationsTableView.setItems(sortedBookings);
     }
     private void updateTview() throws IOException, ClassNotFoundException {
-        this.reservationsTableView.getItems().clear();
+        //this.reservationsTableView.getItems().clear();
         Request request=new Request(Protocol.GET_BOOKINGS);
         objectOutput.writeObject(request);
         objectOutput.flush();
         bookings=(List<Booking>) objectInput.readObject();
-        for(Booking booking : bookings){
-            this.reservationsTableView.getItems().add(booking);
-        }
+        bookings = (List<Booking>) objectInput.readObject();
+        filteredBookings.setAll(bookings);
+
     }
 
     @javafx.fxml.FXML
