@@ -32,15 +32,13 @@
                             <menus>
                                 <Menu mnemonicParsing="false" text="Hotels">
                                     <items>
-                                        <MenuItem mnemonicParsing="false" text="Hotels" />
                               <MenuItem mnemonicParsing="false" onAction="#addHotelOnAction" text="Add Hotel" />
-                              <MenuItem mnemonicParsing="false" onAction="#removeHotelOnAction" text="Remove Hotel" />
-                              <MenuItem mnemonicParsing="false" onAction="#editHotelOnAction" text="Edit Hotels" />
+                              <MenuItem mnemonicParsing="false" onAction="#removeHotelOnAction" text="Manage Hotels" />
                                     </items>
                                 </Menu>
                                 <Menu mnemonicParsing="false" text="Rooms">
                                     <items>
-                                        <MenuItem mnemonicParsing="false" onAction="#addRoomOnAction" text="Add Room" />
+                                        <MenuItem mnemonicParsing="false" onAction="#addRoomOnAction" text="Room Management" />
                               <MenuItem mnemonicParsing="false" onAction="#checkAvailabilityOnAction" text="Check Availables" />
                               <MenuItem mnemonicParsing="false" onAction="#deleteRooms" text="Delete Rooms" />
                                     </items>
