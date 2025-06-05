@@ -49,28 +49,48 @@ public class HotelCardViewController
     private TextField guestAmountTextField;
     @javafx.fxml.FXML
     private DatePicker exitDatePicker;
-//TODO
+    @javafx.fxml.FXML
+    private ComboBox<Hotel> hotelCBox;
+    private Hotel hotel;
+
+    //TODO
     @javafx.fxml.FXML
     public void initialize() {
-        hotelLabel.setText(hotelLabel.getText()+" ");
-        roomTypeComboBox.getItems().clear();
+
+    }
+    public void initData() {
         try {
-            socket=new Socket(MainViewController.SERVER_IP,MainViewController.PORT);
+            socket = new Socket(MainViewController.SERVER_IP, MainViewController.PORT);
             out = new ObjectOutputStream(socket.getOutputStream());
             in = new ObjectInputStream(socket.getInputStream());
             out.flush();
-            Request request=new Request(Protocol.GET_ALL_ROOMS);
+
+            Request request = new Request(Protocol.GET_ALL_ROOMS);
             out.writeObject(request);
             out.flush();
-            rooms=(List<Room>) in.readObject();
-            for(Room room:rooms){
-                roomTypeComboBox.getItems().add(room);
+            rooms = (List<Room>) in.readObject();
+
+            roomTypeComboBox.getItems().clear();
+            for (Room room : rooms) {
+                if (room.getHotel().getId() == hotel.getId()) {
+                    roomTypeComboBox.getItems().add(room);
+                }
             }
-            loadRooms(rooms);
+
+            hotelCBox.getItems().clear();
+            hotelCBox.getItems().add(hotel);
+
+            loadRooms(rooms.stream()
+                    .filter(r -> r.getHotel().getId() == hotel.getId())
+                    .toList());
+
         } catch (IOException | ClassNotFoundException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
     }
+
+
+
     public void loadRooms(List<Room> rooms) {
         flowPane.getChildren().clear();
         for (Room room : rooms) {
@@ -95,9 +115,10 @@ public class HotelCardViewController
         LocalDate checkIn= entryDatePicker.getValue();
         LocalDate checkOut= exitDatePicker.getValue();
         StayPeriod stayPeriod=new StayPeriod(checkIn,checkOut);
-        Object[] data=new Object[2];
+        Object[] data=new Object[3];
         data[0]=stayPeriod;
         data[1]=roomTypeComboBox.getSelectionModel().getSelectedItem().getRoomNumber();
+        data[2]=hotel.getId();
         Request request=new Request(Protocol.CHECK_AVAILABILITY_BY_STAY_PERIOD,data);
         try {
             out.writeObject(request);
@@ -135,9 +156,11 @@ public class HotelCardViewController
             String checkOutDate = exitDatePicker.getValue().toString();
             int roomNumber = roomTypeComboBox.getValue().getRoomNumber();
             int guestsAmount = Integer.parseInt(guestAmountTextField.getText());
-            String command = String.format("2|%s|%s|%s|%s|%d|%d|%d", guestName[0],guestName[1], entryDate, checkOutDate,id,roomNumber,guestsAmount);
+            int hotelID=hotel.getId();
+            String command = String.format("2|%s|%s|%s|%s|%d|%d|%d|%d", guestName[0],guestName[1], entryDate, checkOutDate,id,roomNumber,guestsAmount,hotelID);
             Request request = new Request(Protocol.RESERVE_ROOM,command);
             out.writeObject(request);
+            out.flush();
             Object rawresponse = in.readObject();
             Response response = (Response) rawresponse;
             if (response.getCommand().equals(Response.BOOKING_DONE)) {
@@ -150,5 +173,9 @@ public class HotelCardViewController
         }catch (Exception e){
             e.printStackTrace();
         }
+    }
+
+    public void setHotel(Hotel hotel) {
+        this.hotel = hotel;
     }
 }

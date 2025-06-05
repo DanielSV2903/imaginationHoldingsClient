@@ -1,9 +1,11 @@
 package controller;
 
+import com.imaginationHoldings.domain.Guest;
 import com.imaginationHoldings.domain.Hotel;
 import com.imaginationHoldings.protocol.Protocol;
 import com.imaginationHoldings.protocol.Request;
 import com.imaginationholdingsclient.MainApp;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -82,6 +84,8 @@ public class ClientViewController
                 FXMLLoader loader = new FXMLLoader(MainApp.class.getResource("hotelCardView.fxml"));
                 Parent root = loader.load();
                 HotelCardViewController controller = loader.getController();
+                controller.setHotel(hotel);
+                controller.initData();
                 Stage stage = new Stage();
                 stage.setTitle("Reservar en " + hotel.getName());
                 stage.setScene(new Scene(root));
@@ -91,4 +95,38 @@ public class ClientViewController
             }
         }
 
+    @javafx.fxml.FXML
+    public void myBookingsOnAction(ActionEvent actionEvent) {
+        Guest user=new Guest(Integer.parseInt(LoginController.getUserName()));
+        openMyBookings(user);
+    }
+    private void openMyBookings(Guest guest){
+        try {
+            FXMLLoader loader = new FXMLLoader(MainApp.class.getResource("myBookings.fxml"));
+            Parent root = loader.load();
+            MyBookingsController controller = loader.getController();
+            controller.setGuest(guest);
+            Stage stage = new Stage();
+            stage.setTitle("Mis reservaciones");
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @javafx.fxml.FXML
+    public void bookRoomOnAction(ActionEvent actionEvent) {
+        try {
+            FXMLLoader loader = new FXMLLoader(MainApp.class.getResource("clientBooking.fxml"));
+            Parent root = loader.load();
+            ClientBookingController controller = loader.getController();
+            Stage stage = new Stage();
+            stage.setTitle("Reservar habitacion");
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

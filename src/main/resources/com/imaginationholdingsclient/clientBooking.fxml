@@ -3,23 +3,23 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
-<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.HotelCardViewController">
-   <children>
-      <AnchorPane prefHeight="521.0" prefWidth="765.0">
+
+<BorderPane fx:id="bp" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ClientBookingController">
+   <center>
+      <AnchorPane prefHeight="271.0" prefWidth="765.0">
          <children>
-            <Pane prefHeight="521.0" prefWidth="764.0" style="-fx-background-color: #bdbdbd;">
+            <Pane prefHeight="285.0" prefWidth="764.0" style="-fx-background-color: #bdbdbd;">
                <children>
                   <Pane prefHeight="50.0" prefWidth="764.0" style="-fx-background-color: #0031c9;">
                      <children>
-                        <Text fx:id="hotelLabel" fill="WHITE" layoutX="24.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Hotel ">
+                        <Text fill="WHITE" layoutX="24.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Gestión de Reservaciones">
                            <font>
                               <Font name="System Bold" size="18.0" />
                            </font>
@@ -35,31 +35,25 @@
                         </Text>
                         <Text fill="#808080" layoutX="26.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nombre del Huésped" />
                         <TextField fx:id="guestNameTextField" layoutX="26.0" layoutY="59.0" prefHeight="25.0" prefWidth="316.0" />
-                        <Text fill="#808080" layoutX="26.0" layoutY="109.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Fecha de Entrada" />
-                        <DatePicker fx:id="entryDatePicker" layoutX="26.0" layoutY="113.0" prefHeight="25.0" prefWidth="143.0" />
-                        <Text fill="#808080" layoutX="26.0" layoutY="151.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Fecha de Entrada" />
-                        <DatePicker fx:id="exitDatePicker" layoutX="26.0" layoutY="159.0" prefHeight="25.0" prefWidth="143.0" />
+                        <Text fill="#808080" layoutX="17.0" layoutY="113.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Fecha de Entrada" />
+                        <DatePicker fx:id="entryDatePicker" layoutX="17.0" layoutY="117.0" prefHeight="25.0" prefWidth="143.0" />
+                        <Text fill="#808080" layoutX="26.0" layoutY="163.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Fecha de Salida" />
+                        <DatePicker fx:id="exitDatePicker" layoutX="17.0" layoutY="168.0" prefHeight="25.0" prefWidth="143.0" />
                         <Text fill="#808080" layoutX="387.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Identificacion/Pasaporte" />
                         <TextField fx:id="guestMailTextField" layoutX="387.0" layoutY="59.0" prefHeight="25.0" prefWidth="316.0" />
                         <Text fill="#808080" layoutX="387.0" layoutY="105.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Número de Huespedes" />
                         <TextField fx:id="guestAmountTextField" layoutX="388.0" layoutY="113.0" prefHeight="25.0" prefWidth="143.0" />
-                        <Text fill="#808080" layoutX="551.0" layoutY="105.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Habitacion" />
+                        <Text fill="#808080" layoutX="551.0" layoutY="105.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tipo de Habitación" />
                         <ComboBox fx:id="roomTypeComboBox" layoutX="551.0" layoutY="113.0" prefWidth="150.0" />
                         <Button layoutX="551.0" layoutY="159.0" mnemonicParsing="false" onAction="#createReservationsOnAction" prefHeight="25.0" prefWidth="150.0" text="Crear Reservación" />
                         <Button layoutX="388.0" layoutY="159.0" mnemonicParsing="false" onAction="#cancelOnAction" prefHeight="25.0" prefWidth="143.0" text="Cancelar" />
-                        <Button layoutX="194.0" layoutY="159.0" mnemonicParsing="false" onAction="#checkAvailabilityOnAction" prefHeight="25.0" prefWidth="175.0" text="Checkear Disponibilidad" />
-                        <ComboBox fx:id="hotelCBox" layoutX="219.0" layoutY="113.0" prefWidth="150.0" />
-                        <Text fill="#808080" layoutX="219.0" layoutY="109.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Hotel" />
+                        <ComboBox fx:id="cBoxHotel" layoutX="224.0" layoutY="113.0" prefWidth="150.0" />
+                        <Text fill="#808080" layoutX="224.0" layoutY="105.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Hotel" />
                      </children>
                   </Pane>
-                  <ScrollPane layoutX="13.0" layoutY="297.0">
-                     <content>
-                        <FlowPane fx:id="flowPane" prefHeight="200.0" prefWidth="737.0" />
-                     </content>
-                  </ScrollPane>
                </children>
             </Pane>
          </children>
       </AnchorPane>
-   </children>
-</AnchorPane>
+   </center>
+</BorderPane>

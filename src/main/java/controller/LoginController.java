@@ -1,5 +1,8 @@
 package controller;
 
+import com.imaginationHoldings.domain.Guest;
+import com.imaginationHoldings.protocol.Protocol;
+import com.imaginationHoldings.protocol.Request;
 import com.imaginationHoldings.protocol.UserRole;
 import com.imaginationholdingsclient.MainApp;
 import javafx.event.ActionEvent;
@@ -11,6 +14,10 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.Socket;
+import java.util.List;
 
 public class LoginController
 {
@@ -32,55 +39,48 @@ public class LoginController
         String username = usernameField.getText();
         userName = username;
         String password = passwordField.getText();
+        try {
+            // Si es un número, intenta interpretarlo como ID de huésped
+            int id = Integer.parseInt(username);
 
-        switch (username) {
-            case "admin" -> role = UserRole.ADMIN;
-            case "user" -> role = UserRole.CLIENT;
-            case "front desk" -> role = UserRole.FRONTDESK;
-            default -> role = UserRole.FRONTDESK;
+            Socket socket = new Socket(MainViewController.SERVER_IP, MainViewController.PORT); // IP y puerto del servidor
+            ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
+            out.flush();
+            ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
+
+            Request request = new Request(Protocol.GET_ALL_GUESTS);
+            out.writeObject(request);
+            out.flush();
+
+            List<Guest> guests=(List<Guest>)  in.readObject();
+            for (Guest guest : guests){
+                if (guest.getId() == id) {
+                    role = UserRole.CLIENT;
+                    userName = String.valueOf(guest.getId()); // guarda el ID como nombre
+                }
+            }
+            loadClientView();
+
+        } catch (NumberFormatException e) {
+            // no es un ID, es un username
+            switch (username) {
+                case "admin" -> role = UserRole.ADMIN;
+                case "front desk" -> role = UserRole.FRONTDESK;
+                default -> {
+                    showError("Usuario inválido.");
+                    return;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return;
         }
-        switch (role){
-            case ADMIN -> {}
-            case CLIENT -> {
-                if (role != null && role.getPriority() == 1) {
-                    try {
-                        Stage stage = (Stage) bp.getScene().getWindow();
-                        FXMLLoader loader = new FXMLLoader(MainApp.class.getResource("clientView.fxml"));
-                        Scene newScene = new Scene(loader.load());
-                        stage.setScene(newScene);
-                        stage.setTitle("Client View");
-                        stage.show();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-            case FRONTDESK -> {
-                if (role != null && role.getPriority() == 2) {
-                    try {
-                        Stage stage = (Stage) bp.getScene().getWindow();
-                        FXMLLoader loader = new FXMLLoader(MainApp.class.getResource("front-desk.fxml"));
-                        Scene newScene = new Scene(loader.load());
-                        stage.setScene(newScene);
-                        stage.setTitle("Front Desk View");
-                        stage.show();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-            default -> {
-                try {
-                    Stage stage = (Stage) bp.getScene().getWindow();
-                    FXMLLoader loader = new FXMLLoader(MainApp.class.getResource("front-desk.fxml"));
-                    Scene newScene = new Scene(loader.load());
-                    stage.setScene(newScene);
-                    stage.setTitle("Front Desk View");
-                    stage.show();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
+
+        // redirigir según rol
+        switch (role) {
+            case ADMIN -> {} // aún no implementado
+            case CLIENT -> loadClientView();
+            case FRONTDESK -> loadFrontDeskView();
         }
     }
 
@@ -92,4 +92,38 @@ public class LoginController
     public static UserRole getRole() {
         return role;
     }
+    private void loadClientView() {
+        try {
+            Stage stage = (Stage) bp.getScene().getWindow();
+            FXMLLoader loader = new FXMLLoader(MainApp.class.getResource("clientView.fxml"));
+            Scene newScene = new Scene(loader.load());
+            stage.setScene(newScene);
+            stage.setTitle("Client View");
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void loadFrontDeskView() {
+        try {
+            Stage stage = (Stage) bp.getScene().getWindow();
+            FXMLLoader loader = new FXMLLoader(MainApp.class.getResource("front-desk.fxml"));
+            Scene newScene = new Scene(loader.load());
+            stage.setScene(newScene);
+            stage.setTitle("Front Desk View");
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void showError(String message) {
+        javafx.scene.control.Alert alert = new javafx.scene.control.Alert(javafx.scene.control.Alert.AlertType.ERROR);
+        alert.setTitle("Login Error");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
 }

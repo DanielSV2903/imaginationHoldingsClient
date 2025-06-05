@@ -14,7 +14,7 @@ public class HotelCardController {
     @FXML private Label hotelLocation;
     @FXML private VBox cardRoot;
 
-    private Hotel hotel;
+    private  Hotel hotel;
     private Runnable onClickHandler;
 
     public void setHotel(Hotel hotel, Runnable onClickHandler) {
@@ -37,7 +37,7 @@ public class HotelCardController {
 //        cardRoot.setOnMouseClicked(e -> onClick.run());
 //    }
 
-    public Hotel getHotel() {
+    public  Hotel getHotel() {
         return hotel;
     }
 }
