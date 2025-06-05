@@ -104,9 +104,10 @@ public class RoomsAvailabilityController
             LocalDate checkIn= entryDatePicker.getValue();
             LocalDate checkOut= exitDatePicker.getValue();
             StayPeriod stayPeriod=new StayPeriod(checkIn,checkOut);
-            Object[] data=new Object[2];
+            Object[] data=new Object[3];
             data[0]=stayPeriod;
             data[1]=roomTypeComboBox.getSelectionModel().getSelectedItem().getRoomNumber();
+            data[2]=roomTypeComboBox.getSelectionModel().getSelectedItem().getHotel().getId();
             Request request=new Request(Protocol.CHECK_AVAILABILITY_BY_STAY_PERIOD,data);
             try {
                 objectOutput.writeObject(request);
