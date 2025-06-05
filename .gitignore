@@ -36,3 +36,6 @@ build/
 
 ### Mac OS ###
 .DS_Store
+*.xml
+src/main/java/temp/aaaa.java
+src/main/java/temp/vvvvv.java

@@ -5,6 +5,9 @@ import com.imaginationHoldings.protocol.Protocol;
 import com.imaginationHoldings.protocol.Request;
 import com.imaginationHoldings.protocol.Response;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -19,21 +22,27 @@ import java.util.List;
 
 public class GuestManagementController {
     @javafx.fxml.FXML
-    private TableColumn<Guest,String> ageCol;
+    private TableColumn<Guest, String> ageCol;
     @javafx.fxml.FXML
-    private TableColumn<Guest,String> bDateCol;
+    private TableColumn<Guest, String> bDateCol;
     @javafx.fxml.FXML
-    private TableColumn<Guest,String> idCol;
+    private TableColumn<Guest, String> idCol;
     @javafx.fxml.FXML
-    private TableColumn<Guest,String> nameCol;
+    private TableColumn<Guest, String> nameCol;
     @javafx.fxml.FXML
     private TableView<Guest> guestTableView;
     @javafx.fxml.FXML
-    private TableColumn lastNameCol;
+    private TableColumn<Guest, String> lastNameCol;
+    @javafx.fxml.FXML
+    private TextField filterText;
+
     private Socket socket;
     private ObjectOutputStream objectOutput;
     private ObjectInputStream objectInput;
     private List<Guest> guests;
+
+    private FilteredList<Guest> filteredGuests;
+    private SortedList<Guest> sortedGuests;
 
     @javafx.fxml.FXML
     public void initialize() {
@@ -41,31 +50,52 @@ public class GuestManagementController {
         try {
             socket = new Socket(MainViewController.SERVER_IP, MainViewController.PORT);
             objectOutput = new ObjectOutputStream(socket.getOutputStream());
-            objectOutput.flush(); // fuerza el encabezado del stream
+            objectOutput.flush();
             objectInput = new ObjectInputStream(socket.getInputStream());
+
             Request request = new Request(Protocol.GET_ALL_GUESTS);
             objectOutput.writeObject(request);
             objectOutput.flush();
-            guests= (List<Guest>) objectInput.readObject();
+            guests = (List<Guest>) objectInput.readObject();
+
             idCol.setCellValueFactory(new PropertyValueFactory<>("id"));
             nameCol.setCellValueFactory(new PropertyValueFactory<>("firstName"));
             lastNameCol.setCellValueFactory(new PropertyValueFactory<>("lastName"));
             ageCol.setCellValueFactory(new PropertyValueFactory<>("age"));
-            bDateCol.setCellValueFactory(cellData->new SimpleStringProperty(cellData.getValue().getBirthDate().toString()));
-            for (Guest g:guests){
-                guestTableView.getItems().add(g);
-            }
+            bDateCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getBirthDate().toString()));
+
+            // Envolver en FilteredList
+            filteredGuests = new FilteredList<>(FXCollections.observableArrayList(guests), p -> true);
+
+            // Filtro por texto
+            filterText.textProperty().addListener((observable, oldValue, newValue) -> {
+                filteredGuests.setPredicate(guest -> {
+                    if (newValue == null || newValue.isEmpty()) {
+                        return true;
+                    }
+                    String lowerCaseFilter = newValue.toLowerCase();
+                    return guest.getFirstName().toLowerCase().contains(lowerCaseFilter) ||
+                            guest.getLastName().toLowerCase().contains(lowerCaseFilter);
+                });
+            });
+
+            // Envolver en SortedList y enlazar con la TableView
+            sortedGuests = new SortedList<>(filteredGuests);
+            sortedGuests.comparatorProperty().bind(guestTableView.comparatorProperty());
+            guestTableView.setItems(sortedGuests);
+
         } catch (IOException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
-    private void updateTview()  {
-        this.guestTableView.getItems().clear();
-        Request request=new Request(Protocol.GET_ALL_GUESTS);
+
+    private void updateTview() {
+        Request request = new Request(Protocol.GET_ALL_GUESTS);
         try {
             objectOutput.writeObject(request);
             objectOutput.flush();
-            guests= (List<Guest>) objectInput.readObject();
+            guests = (List<Guest>) objectInput.readObject();
+            //filteredGuests.getSource().setAll(guests);
         } catch (IOException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
@@ -78,11 +108,11 @@ public class GuestManagementController {
     public void editRoomOnAction(ActionEvent actionEvent) {
         Guest selected = guestTableView.getSelectionModel().getSelectedItem();
         if (selected == null) {
-            // Mostrar alerta si no hay selección
             Alert alert = new Alert(Alert.AlertType.WARNING, "Seleccione un huésped primero.");
             alert.showAndWait();
             return;
         }
+
         GridPane gp = new GridPane();
         TextField tfName = new TextField(selected.getFirstName());
         TextField tfLname = new TextField(selected.getLastName());
@@ -117,51 +147,59 @@ public class GuestManagementController {
                 selected.setBirthDate(datePicker.getValue().toString());
             }
         });
-        Request request=new Request(Protocol.EDIT_GUEST,selected);
+
+        Request request = new Request(Protocol.EDIT_GUEST, selected);
         try {
             objectOutput.writeObject(request);
             objectOutput.flush();
-            Object rawResponse=objectInput.readObject();
-            Response response=(Response) rawResponse;
-            if (response.getCommand().equals(Response.GUEST_UPDATED)){
-                alert=new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Guest Status");
-                alert.setContentText("Guest updated successfully.");
-                alert.showAndWait();
-            }else {
-                alert=new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Guest Status");
-                alert.setContentText("Guest was not updated");
-                alert.showAndWait();
+            Object rawResponse = objectInput.readObject();
+            Response response = (Response) rawResponse;
+
+            Alert resultAlert = new Alert(Alert.AlertType.INFORMATION);
+            resultAlert.setTitle("Guest Status");
+            if (response.getCommand().equals(Response.GUEST_UPDATED)) {
+                resultAlert.setContentText("Guest updated successfully.");
+            } else {
+                resultAlert.setContentText("Guest was not updated");
             }
+            resultAlert.showAndWait();
+
         } catch (IOException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
+
         updateTview();
     }
 
     @javafx.fxml.FXML
     public void deleteRoomOnAction(ActionEvent actionEvent) {
-        Guest selected= guestTableView.getSelectionModel().getSelectedItem();
-        Request request=new Request(Protocol.DELETE_GUEST,selected);
+        Guest selected = guestTableView.getSelectionModel().getSelectedItem();
+        if (selected == null) {
+            Alert alert = new Alert(Alert.AlertType.WARNING, "Seleccione un huésped primero.");
+            alert.showAndWait();
+            return;
+        }
+
+        Request request = new Request(Protocol.DELETE_GUEST, selected);
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         try {
             objectOutput.writeObject(request);
             objectOutput.flush();
-            Object rawResponse=objectInput.readObject();
-            Response response=(Response) rawResponse;
-            if (response.getCommand().equals(Response.GUEST_DELETED)){
-                alert.setTitle("Guest Status");
+            Object rawResponse = objectInput.readObject();
+            Response response = (Response) rawResponse;
+            alert.setTitle("Guest Status");
+
+            if (response.getCommand().equals(Response.GUEST_DELETED)) {
                 alert.setContentText("Guest deleted successfully.");
-                alert.showAndWait();
-            }else {
-                alert.setTitle("Guest Status");
+            } else {
                 alert.setContentText("Guest was not deleted");
-                alert.showAndWait();
             }
+            alert.showAndWait();
+
         } catch (IOException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
+
         updateTview();
     }
 }

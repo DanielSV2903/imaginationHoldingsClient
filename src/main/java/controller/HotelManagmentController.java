@@ -33,6 +33,8 @@ public class HotelManagmentController
     private Socket socket;
     private  ObjectOutputStream objectOutput;
     private ObjectInputStream objectInput;
+    @javafx.fxml.FXML
+    private TextField filterField;
 
 
     @javafx.fxml.FXML
@@ -44,6 +46,10 @@ public class HotelManagmentController
             objectOutput = new ObjectOutputStream(socket.getOutputStream());
             objectOutput.flush(); // fuerza el encabezado del stream
              objectInput = new ObjectInputStream(socket.getInputStream());
+            filterField.textProperty().addListener((observable, oldValue, newValue) -> {
+                filterComboBox(newValue);
+            });
+
             // Enviar comando al servidor
             String command = String.format("ADD_GUEST|");
             Request request = new Request(Protocol.GET_ALL_HOTELS,command);
@@ -269,4 +275,20 @@ public class HotelManagmentController
 //            throw new RuntimeException(e);
 //        }
     }
+
+    private void filterComboBox(String filterText) {
+        hotelComboBox.getItems().clear();
+        if (filterText == null || filterText.isEmpty()) {
+            hotelComboBox.getItems().addAll(hotels);
+        } else {
+            String lowerCaseFilter = filterText.toLowerCase();
+            for (Hotel hotel : hotels) {
+                if (hotel.getName().toLowerCase().contains(lowerCaseFilter) ||
+                        hotel.getAddress().toLowerCase().contains(lowerCaseFilter)) {
+                    hotelComboBox.getItems().add(hotel);
+                }
+            }
+        }
+    }
+
 }
